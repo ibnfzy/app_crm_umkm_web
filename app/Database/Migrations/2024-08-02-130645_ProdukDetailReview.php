@@ -22,6 +22,9 @@ class ProdukDetailReview extends Migration
                 'type' => 'TINYINT(3) ZEROFILL',
                 'unsigned' => true
             ],
+            'rating' => [
+                'type' => 'CHAR(1)',
+            ],
             'review' => [
                 'type' => 'TINYINT'
             ],

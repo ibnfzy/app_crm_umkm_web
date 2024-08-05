@@ -3,413 +3,80 @@
 <?= $this->section('content'); ?>
 
 <!-- Section: Main chart -->
-<section class="mb-4">
-  <div class="card">
-    <div class="card-header py-3">
-      <h5 class="mb-0 text-center"><strong>Sales</strong></h5>
+<section class="my-4">
+  <div class="row">
+    <div class="col-3 col-md-3">
+      <div class="card my-1">
+        <div class="card card-primary card-outline">
+          <div class="card-body box-profile">
+            <div class="text-center">
+              <img width="100" class="profile-user-img img-fluid rounded-circle border border-3 border-primary"
+                src="/web_assets/img/product-1.jpg" alt="User profile picture">
+            </div>
+
+            <h3 class="profile-username text-center mt-1 text-primary">BUNGA DESA</h3>
+
+            <p class="text-muted text-center"><i class="fa fa-pencil"></i> Edit</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                <b>Kontak</b> <span class="float-end">32</span>
+              </li>
+              <li class="list-group-item">
+                <b>Alamat</b> <span class="float-end">32</span>
+              </li>
+            </ul>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <div class="card card-primary my-3">
+        <div class="card-header bg-primary">
+          <h3 class="card-title text-light">Informasi Toko</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <strong><i class="fas fa-book mr-1"></i> Tentang</strong>
+
+          <p class="text-muted">
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mollis, risus quis malesuada aliquet, erat
+            nibh iaculis leo, vitae blandit nisl nibh a lectus. Vestibulum ante ipsum primis in faucibus orci luctus et
+            ultrices posuere cubilia curae; Aenean id lacus a nisl iaculis pretium. Nulla facilisi. Nullam egestas, nunc
+            at tincidunt scelerisque, sem sapien dignissim nisi, id aliquam nisl nunc vitae sem. Donec laoreet, nunc
+            vitae scelerisque iaculis, nunc nulla lacinia eros, at sollicitudin purus nisi at nibh. Sed euismod, nibh
+          </p>
+
+        </div>
+        <!-- /.card-body -->
+      </div>
     </div>
-    <div class="card-body">
-      <canvas class="my-4 w-100" id="myChart" height="380"></canvas>
+    <div class="col-9 col-md-9">
+      <div class="card">
+        <div class="card-body table-responsive">
+          <h5 class="card-title">Validasi Pembayaran Customer</h5>
+          <table class="table table-bordered table-sm" id="datatables">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>ID Customer</th>
+                <th>Nama</th>
+                <th>Total Belanjaan</th>
+                <th>Total Bayar</th>
+                <th>Tanggal Checkout</th>
+                <th>Status Transaksi</th>
+                <th>Hubungi Customer</th>
+                <th>Invoice</th>
+                <th>Validasi Bukti Pemabayaran</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
 </section>
 <!-- Section: Main chart -->
-
-<!--Section: Sales Performance KPIs-->
-<section class="mb-4">
-  <div class="card">
-    <div class="card-header text-center py-3">
-      <h5 class="mb-0 text-center">
-        <strong>Sales Performance KPIs</strong>
-      </h5>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-hover text-nowrap">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Product Detail Views</th>
-              <th scope="col">Unique Purchases</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Product Revenue</th>
-              <th scope="col">Avg. Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Value</th>
-              <td>18,492</td>
-              <td>228</td>
-              <td>350</td>
-              <td>$4,787.64</td>
-              <td>$13.68</td>
-            </tr>
-            <tr>
-              <th scope="row">Percentage change</th>
-              <td>
-                <span class="text-danger">
-                  <i class="fas fa-caret-down me-1"></i><span>-48.8%%</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>14.0%</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>46.4%</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>29.6%</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-danger">
-                  <i class="fas fa-caret-down me-1"></i><span>-11.5%</span>
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Absolute change</th>
-              <td>
-                <span class="text-danger">
-                  <i class="fas fa-caret-down me-1"></i><span>-17,654</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>28</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>111</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-success">
-                  <i class="fas fa-caret-up me-1"></i><span>$1,092.72</span>
-                </span>
-              </td>
-              <td>
-                <span class="text-danger">
-                  <i class="fas fa-caret-down me-1"></i><span>$-1.78</span>
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Section: Sales Performance KPIs-->
-
-<!--Section: Minimal statistics cards-->
-<section>
-  <div class="row">
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="fas fa-pencil-alt text-info fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>278</h3>
-              <p class="mb-0">New Posts</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="far fa-comment-alt text-warning fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>156</h3>
-              <p class="mb-0">New Comments</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="fas fa-chart-line text-success fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>64.89 %</h3>
-              <p class="mb-0">Bounce Rate</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="fas fa-map-marker-alt text-danger fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>423</h3>
-              <p class="mb-0">Total Visits</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-danger">278</h3>
-              <p class="mb-0">New Projects</p>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-rocket text-danger fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-success">156</h3>
-              <p class="mb-0">New Clients</p>
-            </div>
-            <div class="align-self-center">
-              <i class="far fa-user text-success fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-warning">64.89 %</h3>
-              <p class="mb-0">Conversion Rate</p>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-chart-pie text-warning fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-info">423</h3>
-              <p class="mb-0">Support Tickets</p>
-            </div>
-            <div class="align-self-center">
-              <i class="far fa-life-ring text-info fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-info">278</h3>
-              <p class="mb-0">New Posts</p>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-book-open text-info fa-3x"></i>
-            </div>
-          </div>
-          <div class="px-md-1">
-            <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-              <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-warning">156</h3>
-              <p class="mb-0">New Comments</p>
-            </div>
-            <div class="align-self-center">
-              <i class="far fa-comments text-warning fa-3x"></i>
-            </div>
-          </div>
-          <div class="px-md-1">
-            <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-success">64.89 %</h3>
-              <p class="mb-0">Bounce Rate</p>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-mug-hot text-success fa-3x"></i>
-            </div>
-          </div>
-          <div class="px-md-1">
-            <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-              <div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 col-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div>
-              <h3 class="text-danger">423</h3>
-              <p class="mb-0">Total Visits</p>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-map-signs text-danger fa-3x"></i>
-            </div>
-          </div>
-          <div class="px-md-1">
-            <div class="progress mt-3 mb-1 rounded" style="height: 7px">
-              <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Section: Minimal statistics cards-->
-
-<!--Section: Statistics with subtitles-->
-<section>
-  <div class="row">
-    <div class="col-xl-6 col-md-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between p-md-1">
-            <div class="d-flex flex-row">
-              <div class="align-self-center">
-                <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
-              </div>
-              <div>
-                <h4>Total Posts</h4>
-                <p class="mb-0">Monthly blog posts</p>
-              </div>
-            </div>
-            <div class="align-self-center">
-              <h2 class="h1 mb-0">18,000</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-6 col-md-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between p-md-1">
-            <div class="d-flex flex-row">
-              <div class="align-self-center">
-                <i class="far fa-comment-alt text-warning fa-3x me-4"></i>
-              </div>
-              <div>
-                <h4>Total Comments</h4>
-                <p class="mb-0">Monthly blog posts</p>
-              </div>
-            </div>
-            <div class="align-self-center">
-              <h2 class="h1 mb-0">84,695</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xl-6 col-md-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between p-md-1">
-            <div class="d-flex flex-row">
-              <div class="align-self-center">
-                <h2 class="h1 mb-0 me-4">$76,456.00</h2>
-              </div>
-              <div>
-                <h4>Total Sales</h4>
-                <p class="mb-0">Monthly Sales Amount</p>
-              </div>
-            </div>
-            <div class="align-self-center">
-              <i class="far fa-heart text-danger fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-6 col-md-12 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between p-md-1">
-            <div class="d-flex flex-row">
-              <div class="align-self-center">
-                <h2 class="h1 mb-0 me-4">$36,000.00</h2>
-              </div>
-              <div>
-                <h4>Total Cost</h4>
-                <p class="mb-0">Monthly Cost</p>
-              </div>
-            </div>
-            <div class="align-self-center">
-              <i class="fas fa-wallet text-success fa-3x"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <?= $this->endSection(); ?>

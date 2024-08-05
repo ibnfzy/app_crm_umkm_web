@@ -56,9 +56,24 @@
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 
   <?= $this->renderSection('script'); ?>
-
   <script>
-  new DataTable('#datatables');
+  const currentRoute = window.location.pathname;
+
+  document.querySelectorAll('.list-group-item').forEach((item) => {
+    // const link = item.querySelector('a');
+    if (item.getAttribute('href') === currentRoute) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+
+  new DataTable('#datatables', {
+    responsive: true,
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json'
+    }
+  });
 
   toastr.options = {
     "closeButton": true,

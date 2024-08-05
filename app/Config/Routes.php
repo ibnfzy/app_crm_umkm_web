@@ -17,7 +17,16 @@ $routes->group('CustomerAuth', function (RouteCollection $routes) {
 });
 
 $routes->group('OperatorPanel', function (RouteCollection $routes) {
-  $routes->get('/', 'OperatorPanel::index');
+  $routes->get('/', function () {
+    return redirect()->to(base_url('OperatorPanel/Profile'));
+  });
+
+  $routes->get('Profile', 'OperatorPanel::index');
+  $routes->get('Produk', 'OperatorPanel::produk');
+  $routes->get('Pelanggan', 'OperatorPanel::pelanggan');
+  $routes->get('Kupon', 'OperatorPanel::kupon');
+  $routes->get('Transaksi', 'OperatorPanel::transaksi');
+  $routes->get('Review', 'OperatorPanel::review');
 });
 
 $routes->group('CustomerPanel', function (RouteCollection $routes) {
