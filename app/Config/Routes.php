@@ -17,6 +17,7 @@ $routes->group('OperatorLogin', function (RouteCollection $routes) {
 
 $routes->group('CustomerAuth', function (RouteCollection $routes) {
   $routes->get('/', 'CustomerAuth::index');
+  $routes->get('Register', 'CustomerAuth::register');
 });
 
 $routes->group('OperatorPanel', function (RouteCollection $routes) {

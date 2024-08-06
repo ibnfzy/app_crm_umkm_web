@@ -44,6 +44,7 @@
           <img src="/panel_assets/img/people.jpg" class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <h1 class="my-2">Operator Login</h1>
           <form action="/Login/Auth" method="post">
             <!-- Email input -->
             <div data-mdb-input-init class="form-outline mb-4">
