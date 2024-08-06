@@ -150,7 +150,7 @@ h2 {
 .normal-slider .slick-prev:focus,
 .normal-slider .slick-next:hover,
 .normal-slider .slick-next:focus {
-  background: rgba(0, 0, 0, 0.7);
+  background: #dfdfdf;
 }
 
 .normal-slider .slick-prev:hover::before,
@@ -252,6 +252,10 @@ h2 {
   background: #025b95;
 }
 
+.dropdown-item:focus .dropdown-item:hover {
+  background-color: #888 !important;
+}
+
 .nav .dropdown-menu a.active {
   color: #353535;
   background: #f8f9fa;
@@ -275,7 +279,7 @@ h2 {
 
   .nav .navbar-dark a.nav-link:hover,
   .nav .navbar-dark a.nav-link.active {
-    color: #000000;
+    color: #dfdfdf;
   }
 }
 

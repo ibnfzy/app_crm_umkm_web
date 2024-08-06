@@ -37,11 +37,13 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <h1>Selamat Datang di website Pusat Sarung Tenun Mamasa</h1>
+        <h1>Selamat Datang di website Bunga Desa</h1>
       </div>
       <div class="col-md-6">
         <p class="text-white">
           <!-- $toko['tentang'] -->
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Consequuntur, nemo.
         </p>
       </div>
     </div>
@@ -53,7 +55,7 @@
 <div class="featured-product product">
   <div class="container-fluid">
     <div class="section-header">
-      <h1>Produk Sarung Tenun Mamasa</h1>
+      <h1>Produk Bunga Desa</h1>
     </div>
     <div class="row align-items-center product-slider product-slider-4">
       <?php
@@ -74,7 +76,7 @@
       <div class="col-lg-3" style="max-width: 100%;">
         <div class="product-item">
           <div class="product-title">
-            <a href="#">
+            <a href="/Katalog/1">
               Nama Produk
             </a>
             <div class="ratting">
@@ -82,11 +84,11 @@
             </div>
           </div>
           <div class="product-image">
-            <a href="#">
+            <a href="/Katalog/1">
               <img src="/web_assets/img/product-1.jpg" alt="Product Image">
             </a>
             <div class="product-action">
-              <a href="#"><i class="fa fa-eye"></i></a>
+              <a href="/Katalog/1"><i class="fa fa-eye"></i></a>
             </div>
           </div>
           <div class="product-price">

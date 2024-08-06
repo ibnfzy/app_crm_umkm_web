@@ -17,8 +17,8 @@
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Akun</a>
             <div class="dropdown-menu">
-              <a href="<?= base_url('Login') ?>" class="dropdown-item">Login</a>
-              <a href="<?= base_url('Daftar') ?>" class="dropdown-item">Register</a>
+              <a href="<?= base_url('Login') ?>" class="dropdown-item text-white">Login</a>
+              <a href="<?= base_url('Daftar') ?>" class="dropdown-item text-white">Register</a>
             </div>
           </div>
         </div>
@@ -28,6 +28,12 @@
 </div>
 <!-- Nav Bar End -->
 
+<style>
+a.dropdown-item:hover {
+  background-color: #0f7dc5;
+}
+</style>
+
 <!-- Bottom Bar Start -->
 <div class="bottom-bar">
   <div class="container-fluid">
@@ -35,7 +41,7 @@
       <div class="col-md-3">
         <div class="logo">
           <a href="<?= base_url() ?>">
-            <h5 class="font-weight-bold text-lg-center">PUSAT SARUNG <br> TENUN MAMASA</h5>
+            <h5 class="font-weight-bold text-lg-center">BUNGA DESA</h5>
           </a>
         </div>
       </div>
