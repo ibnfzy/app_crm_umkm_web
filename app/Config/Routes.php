@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('Katalog', 'Home::katalog');
 
 
 $routes->group('OperatorLogin', function (RouteCollection $routes) {
@@ -30,5 +31,11 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
 });
 
 $routes->group('CustomerPanel', function (RouteCollection $routes) {
-  $routes->get('/', 'CustomerPanel::index');
+  $routes->get('/', function () {
+    return redirect()->to(base_url('CustomerPanel/Profile'));
+  });
+
+  $routes->get('Profile', 'CustomerPanel::index');
+  $routes->get('Orderan', 'CustomerPanel::orderan');
+  $routes->get('Review', 'CustomerPanel::review');
 });
