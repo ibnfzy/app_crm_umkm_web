@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Filters\OperatorAuth;
+use App\Filters\OperatorLogin;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -34,6 +36,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'operator_auth' => OperatorAuth::class,
+        'operator_login' => OperatorLogin::class,
     ];
 
     /**
@@ -103,5 +107,8 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'operator_auth' => ['before' => ['OperatorPanel/*', 'OperatorPanel']],
+        'operator_login' => ['before' => ['OperatorLogin/*', 'OperatorLogin']],
+    ];
 }
