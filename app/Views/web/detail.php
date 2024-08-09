@@ -2,6 +2,8 @@
 
 <?= $this->section('content'); ?>
 
+<?php $db = \Config\Database::connect(); ?>
+
 <!-- Product Detail Start -->
 <div class="product-detail">
   <div class="container-fluid">
@@ -13,22 +15,16 @@
               <div class="col-md-5">
                 <div class="product-slider-single normal-slider">
 
-                  <img src="/web_assets/img/product-1.jpg" alt="Product Image">
-
-                  <img src="/web_assets/img/product-1.jpg" alt="Product Image">
-
-                  <img src="/web_assets/img/product-1.jpg" alt="Product Image">
-
-                  <img src="/web_assets/img/product-1.jpg" alt="Product Image">
+                  <?php foreach ((array) $dataImg as $item) : ?>
+                  <img src="/Uploads/<?= $item['file'] ?>" alt="Product Image">
+                  <?php endforeach ?>
 
                 </div>
                 <div class="product-slider-single-nav normal-slider">
 
-                  <div class="slider-nav-img"><img src="/web_assets/img/product-1.jpg" alt="Product Image"></div>
-
-                  <div class="slider-nav-img"><img src="/web_assets/img/product-1.jpg" alt="Product Image"></div>
-
-                  <div class="slider-nav-img"><img src="/web_assets/img/product-1.jpg" alt="Product Image"></div>
+                  <?php foreach ((array) $dataImg as $item) : ?>
+                  <div class="slider-nav-img"><img src="/Uploads/<?= $item['file'] ?>" alt="Product Image"></div>
+                  <?php endforeach ?>
 
                 </div>
               </div>
@@ -38,27 +34,27 @@
                   <div class="product-content">
                     <div class="title">
                       <h2>
-                        TEST
+                        <?= $data['nama_produk']; ?>
                       </h2>
                     </div>
                     <div class="ratting">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
                       ( 0 )
                     </div>
                     <div class="price">
                       <h4>Price:</h4>
-                      <p id="price"> Rp
-                        2000.000
+                      <p id="price"> Rp <?= number_format($data['harga_promo'], 0, ',', '.'); ?>
+                        <span class="text-danger">Rp <?= number_format($data['harga_produk'], 0, ',', '.'); ?></span>
                       </p>
                     </div>
                     <div class="price">
                       <h4>Stok:</h4>
                       <p id="stok">
-                        23
+                        <?= $data['stok']; ?>
                       </p>
                     </div>
                     <div class="quantity">
@@ -140,33 +136,49 @@
 
           <div class="row align-items-center product-slider product-slider-4">
 
+            <?php foreach ((array) $dataRekom as $item) : ?>
+
+            <?php
+              $getImg = $db->table('produk_detail_gambar')->where('id_produk', $item['id_produk'])->orderBy('id_detail_gambar', 'RANDOM')->get()->getRowArray();
+              ?>
+
             <div class="col-lg-3" style="max-width: 100%;">
               <div class="product-item">
                 <div class="product-title">
-                  <a href="#">
-                    TEST
+                  <a href="/Katalog/<?= $item['id_produk']; ?>">
+                    <?= $item['nama_produk']; ?>
                   </a>
                   <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    ⭐⭐⭐⭐⭐
                   </div>
                 </div>
                 <div class="product-image">
-                  <a href="#">
-                    <img src="/web_assets/img/product-1.jpg" alt="Product Image">
+                  <a href="/Katalog/1">
+                    <img src="/uploads/<?= $getImg['file']; ?>" alt="Product Image">
                   </a>
                   <div class="product-action">
-                    <a href="#"><i class="fa fa-eye"></i></a>
+                    <a href="/Katalog/<?= $item['id_produk']; ?>"><i class="fa fa-eye"></i></a>
                   </div>
                 </div>
                 <div class="product-price">
+                  <?php if ($item['harga_promo'] != 0) : ?>
                   <h3>
-                    Rp. 20
+                    Rp <?= number_format($item['harga_promo'], 0, ',', '.'); ?> <span
+                      style="text-decoration: line-through; color: red">Rp
+                      <?= number_format($item['harga_produk'], 0, ',', '.'); ?> </span>
                   </h3>
+                  <?php else : ?>
+                  <h3>
+                    Rp <?= number_format($item['harga_produk'], 0, ',', '.'); ?>
+                  </h3>
+                  <?php endif ?>
                 </div>
               </div>
             </div>
+
+            <?php
+            endforeach
+            ?>
 
           </div>
         </div>

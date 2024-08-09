@@ -2,8 +2,7 @@
 
 <?= $this->section('content'); ?>
 <?php
-// $db = \Config\Database::connect();
-// $home = new \App\Controllers\Home;
+$db = \Config\Database::connect();
 ?>
 <!-- Main Slider Start -->
 <div class="header">
@@ -58,48 +57,48 @@
       <h1>Produk Bunga Desa</h1>
     </div>
     <div class="row align-items-center product-slider product-slider-4">
-      <?php
-      //  foreach ($rekom as $item) :
-      ?>
+      <?php foreach ((array) $dataProduk as $item) : ?>
 
-      <?php
-      // $get = $db->table('produk_detail')->where('id_produk', $item['id_produk'])->orderBy('RAND()')->get(1)->getRowArray();
-      // $getMaxHarga = $db->table('produk_detail')->selectMax('harga_produk', 'max_harga')->where('id_produk', $item['id_produk'])->get()->getRowArray();
-      // $getMinHarga = $db->table('produk_detail')->selectMin('harga_produk', 'min_harga')->where('id_produk', $item['id_produk'])->get()->getRowArray();
+        <?php
+        $getImg = $db->table('produk_detail_gambar')->where('id_produk', $item['id_produk'])->orderBy('id_detail_gambar', 'RANDOM')->get()->getRowArray();
+        ?>
 
-      // $join = '<span>Rp</span>' . number_format($getMinHarga['min_harga'], 0, ',', '.') . '<span>-Rp</span>' . number_format($getMaxHarga['max_harga'], 0, ',', '.');
-      // $harga = ($getMaxHarga['max_harga'] == $getMinHarga['min_harga']) ? '<span>Rp</span>' . number_format($getMaxHarga['max_harga'], 0, ',', '.') : $join;
-
-      // $total_star = $home->review_star($item['id_produk']);
-      ?>
-
-      <div class="col-lg-3" style="max-width: 100%;">
-        <div class="product-item">
-          <div class="product-title">
-            <a href="/Katalog/1">
-              Nama Produk
-            </a>
-            <div class="ratting">
-              ⭐⭐⭐⭐⭐
+        <div class="col-lg-3" style="max-width: 100%;">
+          <div class="product-item">
+            <div class="product-title">
+              <a href="/Katalog/<?= $item['id_produk']; ?>">
+                <?= $item['nama_produk']; ?>
+              </a>
+              <div class="ratting">
+                ⭐⭐⭐⭐⭐
+              </div>
             </div>
-          </div>
-          <div class="product-image">
-            <a href="/Katalog/1">
-              <img src="/web_assets/img/product-1.jpg" alt="Product Image">
-            </a>
-            <div class="product-action">
-              <a href="/Katalog/1"><i class="fa fa-eye"></i></a>
+            <div class="product-image">
+              <a href="/Katalog/1">
+                <img src="/uploads/<?= $getImg['file']; ?>" alt="Product Image">
+              </a>
+              <div class="product-action">
+                <a href="/Katalog/<?= $item['id_produk']; ?>"><i class="fa fa-eye"></i></a>
+              </div>
             </div>
-          </div>
-          <div class="product-price">
-            <h3>
-              Rp 20
-            </h3>
+            <div class="product-price">
+              <?php if ($item['harga_promo'] != 0) : ?>
+                <h3>
+                  Rp <?= number_format($item['harga_promo'], 0, ',', '.'); ?> <span
+                    style="text-decoration: line-through; color: red">Rp
+                    <?= number_format($item['harga_produk'], 0, ',', '.'); ?> </span>
+                </h3>
+              <?php else : ?>
+                <h3>
+                  Rp <?= number_format($item['harga_produk'], 0, ',', '.'); ?>
+                </h3>
+              <?php endif ?>
+            </div>
           </div>
         </div>
-      </div>
+
       <?php
-      // endforeach 
+      endforeach
       ?>
     </div>
   </div>
