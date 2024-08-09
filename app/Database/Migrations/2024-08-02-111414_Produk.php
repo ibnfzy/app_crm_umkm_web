@@ -10,7 +10,7 @@ class Produk extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_prouduk' => [
+            'id_produk' => [
                 'type' => 'SMALLINT(5) ZEROFILL',
                 'auto_increment' => true,
                 'unsigned' => true
@@ -37,7 +37,7 @@ class Produk extends Migration
             ]
         ]);
 
-        $this->forge->addKey('id_prouduk', true);
+        $this->forge->addKey('id_produk', true);
 
         $this->forge->createTable('produk');
     }

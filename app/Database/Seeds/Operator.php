@@ -8,7 +8,7 @@ class Operator extends Seeder
 {
     public function run()
     {
-        $this->forge->addField([
+        $this->db->table('operator')->insert([
             'username' => 'admin',
             'password' => password_hash('admin', PASSWORD_DEFAULT),
         ]);
