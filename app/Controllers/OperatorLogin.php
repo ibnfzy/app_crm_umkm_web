@@ -30,14 +30,13 @@ class OperatorLogin extends BaseController
 
         if ($data) {
             $password_data = $data['password'];
-            $id = $data['id_operator'];
 
             $verify = password_verify($password ?? '', $password_data);
 
             if ($verify) {
                 $sessionData = [
                     'id_operator' => $data['id_operator'],
-                    'fullname' => $data['fullname'],
+                    // 'fullname' => $data['fullname'],
                     'username' => $data['username'],
                     'logged_in_operator' => TRUE
                 ];
@@ -46,7 +45,7 @@ class OperatorLogin extends BaseController
                 // $session->markAsTempdata('logged_in_operator', 1800); //timeout 30 menit
 
                 return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'info')
-                    ->with('message', 'Selamat Datang Kembali ' . $sessionData['fullname']);
+                    ->with('message', 'Selamat Datang Kembali ' . $sessionData['username']);
             } else {
                 return redirect()->to(base_url('OperatorLogin'))->with('type-status', 'error')
                     ->with('message', 'Password tidak benar');

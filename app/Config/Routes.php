@@ -13,6 +13,8 @@ $routes->get('Cart', 'Home::cart');
 
 $routes->group('OperatorLogin', function (RouteCollection $routes) {
   $routes->get('/', 'OperatorLogin::index');
+  $routes->post('Auth', 'OperatorLogin::auth');
+  $routes->get('Logoff', 'OperatorLogin::logoff');
 });
 
 $routes->group('CustomerAuth', function (RouteCollection $routes) {

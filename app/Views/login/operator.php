@@ -45,7 +45,7 @@
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
           <h1 class="my-2">Operator Login</h1>
-          <form action="/Login/Auth" method="post">
+          <form action="/OperatorLogin/Auth" method="post">
             <!-- Email input -->
             <div data-mdb-input-init class="form-outline mb-4">
               <input type="text" class="form-control form-control-lg" placeholder="Enter a valid email address"
