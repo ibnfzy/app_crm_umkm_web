@@ -7,7 +7,7 @@
         <div class="footer-widget">
           <h2>Fast Links</h2>
           <ul>
-            <li><a href="#">Login Operator</a></li>
+            <li><a href="/OperatorPanel/">Login Operator</a></li>
           </ul>
         </div>
       </div>

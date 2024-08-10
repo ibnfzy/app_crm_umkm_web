@@ -34,6 +34,9 @@ class Produk extends Migration
             'stok' => [
                 'type' => 'INT'
             ],
+            'deskripsi' => [
+                'type' => 'TEXT'
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'default' => new RawSql('(CURRENT_TIMESTAMP())')

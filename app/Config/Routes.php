@@ -28,7 +28,15 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   });
 
   $routes->get('Profile', 'OperatorPanel::index');
+
   $routes->get('Produk', 'OperatorPanel::produk');
+  $routes->post('Produk', 'OperatorPanel::produk_add');
+  $routes->post('Produk/edit', 'OperatorPanel::produk_edit');
+  $routes->get('Produk/(:num)', 'OperatorPanel::produk_delete/$1');
+
+  $routes->get('Produk/AddSingleImage', 'OperatorPanel::produk_add_single_image');
+  $routes->get('Produk/DeleteSingleImage/(:num)', 'OperatorPanel::produk_delete_single_image/$1');
+
   $routes->get('Pelanggan', 'OperatorPanel::pelanggan');
   $routes->get('Kupon', 'OperatorPanel::kupon');
   $routes->get('Transaksi', 'OperatorPanel::transaksi');
