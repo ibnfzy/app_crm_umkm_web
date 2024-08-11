@@ -39,6 +39,11 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
 
   $routes->get('Pelanggan', 'OperatorPanel::pelanggan');
   $routes->get('Kupon', 'OperatorPanel::kupon');
+  $routes->post('Kupon', 'OperatorPanel::kupon_add');
+  $routes->post('Kupon/edit', 'OperatorPanel::kupon_edit');
+  $routes->get('Kupon/(:num)', 'OperatorPanel::kupon_delete/$1');
+
+
   $routes->get('Transaksi', 'OperatorPanel::transaksi');
   $routes->get('Review', 'OperatorPanel::review');
 });

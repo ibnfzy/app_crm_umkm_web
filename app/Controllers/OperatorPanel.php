@@ -115,7 +115,7 @@ class OperatorPanel extends BaseController
             'harga_promo' => $this->request->getPost('harga_promo')
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('dataMessage', 'Data produk berhasil diupdate');
+        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('message', 'Data produk berhasil diupdate');
     }
 
     public function produk_delete($id)
@@ -129,7 +129,7 @@ class OperatorPanel extends BaseController
 
         $this->db->table('produk_detail_gambar')->where('id_produk', $id)->delete();
 
-        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('dataMessage', 'Data produk dihapus');
+        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('message', 'Data produk dihapus');
     }
 
     public function produk_add_single_image()
@@ -157,7 +157,7 @@ class OperatorPanel extends BaseController
             'file' => $fileName
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('dataMessage', 'Gambar ditambahkan');
+        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('message', 'Gambar ditambahkan');
     }
 
     public function produk_delete_single_image($id)
@@ -166,7 +166,7 @@ class OperatorPanel extends BaseController
         $getFiles = $this->db->table('produk_detail_gambar')->where('id_detail_gambar', $id)->get()->getRowArray();
         unlink('Uploads/' . $getFiles[0]['file']);
 
-        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('dataMessage', 'Gambar berhasil dihapus');
+        return redirect()->to(base_url('OperatorPanel/Produk'))->with('type-status', 'success')->with('message', 'Gambar berhasil dihapus');
     }
 
     public function pelanggan()
@@ -181,6 +181,82 @@ class OperatorPanel extends BaseController
         return view('operator_panel/kupon', [
             'data' => $this->db->table('kupon')->orderBy('id_kupon', 'DESC')->get()->getResultArray()
         ]);
+    }
+
+    public function kupon_add()
+    {
+        $rules = [
+            'id_unique_kupon' => [
+                'rules' => 'max_lenght[8]|is_unique[kupon.id_unique_kupon]',
+                'errors' => [
+                    'max_lenght' => 'ID Kupon Maksimal 8 karakter'
+                ]
+            ],
+            'discount' => [
+                'rules' => 'max_lenght[2]',
+                'errors' => [
+                    'max_lenght' => 'Discount Maksimal 2 karakter'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('OperatorPanel/Kupon'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $this->db->table('kupon')->insert([
+            'id_unique_kupon' => $this->request->getPost('id_unique_kupon'),
+            'deskripsi_kupon' => $this->request->getPost('deskripsi_kupon'),
+            'max_nominal_kupon' => $this->request->getPost('max_nominal_kupon'),
+            'discount_kupon' => $this->request->getPost('discount_kupon'),
+            'level_kupon' => $this->request->getPost('level_kupon')
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Kupon'))->with('type-status', 'success')->with('message', 'Kupon ditambahkan');
+    }
+
+    public function kupon_edit()
+    {
+        $rules = [
+            'id_kupon' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'ID Kupon harus diisi'
+                ]
+            ],
+            'id_unique_kupon' => [
+                'rules' => 'max_lenght[8]|is_unique[kupon.id_unique_kupon, id_kupon, {id_kupon}]',
+                'errors' => [
+                    'max_lenght' => 'ID Kupon Maksimal 8 karakter'
+                ]
+            ],
+            'discount' => [
+                'rules' => 'max_lenght[2]',
+                'errors' => [
+                    'max_lenght' => 'Discount Maksimal 2 karakter'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('OperatorPanel/Kupon'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $this->db->table('kupon')->where('id_kupon', $this->request->getPost('id_kupon'))->update([
+            'id_unique_kupon' => $this->request->getPost('id_unique_kupon'),
+            'deskripsi_kupon' => $this->request->getPost('deskripsi_kupon'),
+            'max_nominal_kupon' => $this->request->getPost('max_nominal_kupon'),
+            'discount_kupon' => $this->request->getPost('discount_kupon'),
+            'level_kupon' => $this->request->getPost('level_kupon')
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Kupon'))->with('type-status', 'success')->with('message', 'Kupon diedit');
+    }
+
+    public function kupon_delete($id)
+    {
+        $this->db->table('kupon')->where('id_kupon', $id)->delete();
+        return redirect()->to(base_url('OperatorPanel/Kupon'))->with('type-status', 'success')->with('message', 'Kupon dihapus');
     }
 
     public function transaksi()
