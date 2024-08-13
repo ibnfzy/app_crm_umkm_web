@@ -3,11 +3,14 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use Faker\Factory;
 
 class Produk extends Seeder
 {
     public function run()
     {
+        $faker = Factory::create();
+
         $img = [
             'product-1.jpg',
             'product-2.jpg',
@@ -31,7 +34,8 @@ class Produk extends Seeder
                 'nama_produk' => 'Product ' . toZeroFill($i + 1),
                 'harga_produk' => rand(10000, 100000),
                 'harga_promo' => rand(1000, 10000),
-                'stok' => rand(1, 999)
+                'stok' => rand(1, 999),
+                'deskripsi' => $faker->sentence
             ]);
 
             $this->db->table('produk_detail_gambar')->insertBatch([

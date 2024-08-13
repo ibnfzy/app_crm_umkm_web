@@ -26,15 +26,19 @@
           <?php foreach ((array) $data as $key => $item) : ?>
           <tr>
             <td><?= $key + 1 ?></td>
-            <td><?= $item['id_kupon'] ?></td>
+            <td><?= $item['id_unique_kupon'] ?></td>
             <td><?= $item['deskripsi_kupon'] ?></td>
-            <td><?= $item['max_nominal_potongan'] ?></td>
-            <td><?= $item['discount_kupon'] ?></td>
-            <td><?= $item['level_kupon'] ?></td>
+            <td>Rp <?= number_format($item['max_nominal_kupon'], 0, ',', '.') ?></td>
+            <td><?= $item['discount_kupon'] ?>%</td>
+            <td>Level <?= $item['level_kupon'] ?></td>
             <td><?= $item['created_at'] ?></td>
             <td>
-              <button type="button" onclick="" class="btn btn-sm btn-primary">Edit</button>
-              <a href="/OperatorPanel/Kupon/<?= $item['id_kupon'] ?>" class="btn btn-sm btn-danger">Delete</a>
+              <div class="btn-group-vertical">
+                <button type="button"
+                  onclick="edit('<?= $item['id_kupon'] ?>', '<?= $item['id_unique_kupon'] ?>', '<?= $item['deskripsi_kupon'] ?>', '<?= $item['max_nominal_kupon'] ?>', '<?= $item['discount_kupon'] ?>', '<?= $item['level_kupon'] ?>')"
+                  class="btn btn-sm btn-primary">Edit</button>
+                <a href="/OperatorPanel/Kupon/<?= $item['id_kupon'] ?>" class="btn btn-sm btn-danger">Delete</a>
+              </div>
             </td>
           </tr>
           <?php endforeach ?>
@@ -53,41 +57,45 @@
         <button type="button" class="btn-close bg-white" data-mdb-ripple-init data-mdb-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <form action="/OperatorPanel/Produk" method="post">
+      <form action="/OperatorPanel/Kupon" method="post">
         <div class="modal-body">
-
-          <div class="form-outline mb-4" data-mdb-input-init>
-            <input type="text" id="id_unique_produk" class="form-control" name="id_unique_produk" required>
+          <p class="text-center border rounded p-2" style="background-color: antiquewhite;">Kupon bisa
+            didapatkan oleh
+            customer
+            berdasarkan jumlah transaksi.</p>
+          <div class="mb-4">
             <label for="id_unique_produk" class="form-label">ID Kupon</label>
+            <input type="text" id="id_unique_produk" class="form-control" name="id_unique_produk" required>
+            <small class="form-text text-muted">Contoh: IDKUPON2022</small>
           </div>
 
           <div class="col-12 mb-4">
             <label class="visually-hidden" for="harga_produk">Max Nominal Potongan</label>
             <div class="input-group">
               <div class="input-group-text">Rp.</div>
-              <input type="number" class="form-control harga_produk" id="harga_produk" placeholder="Harga Produk"
-                required />
+              <input type="number" class="form-control harga_produk" id="harga_produk"
+                placeholder="Max Nominal Potongan" required />
             </div>
+            <small class="form-text text-muted">Isi 0 untuk tanpa batasan potongan</small>
           </div>
 
           <div class="col-12 mb-4">
             <label class="visually-hidden" for="harga_promo">Discount</label>
             <div class="input-group">
-              <input type="number" class="form-control harga_promo" id="harga_promo" placeholder="Harga Promo"
-                required />
+              <input type="number" class="form-control harga_promo" id="harga_promo" placeholder="30" required />
               <div class="input-group-text">%</div>
-              <small class="form-text text-muted" id="error_harga_promo"></small>
             </div>
+            <small class="form-text text-muted">maximal potongan 99%</small>
           </div>
 
           <div class="form-outline mb-4">
+            <label for="level" class="form-label">Level Kupon</label>
             <select name="level" id="level" class="form-select">
               <option value="0">Level 0 (Untuk Customer Baru)</option>
               <option value="1">Level 1 (3x Transaksi)</option>
               <option value="2">Level 2 (5x Transaksi)</option>
               <option value="3">Level 3 (10x Transaksi)</option>
             </select>
-            <label for="level" class="form-label">Level Kupon</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
@@ -119,42 +127,43 @@
         <div class="modal-body">
           <input type="hidden" name="id_kupon" id="id_kupon">
           <div class="form-outline mb-4" data-mdb-input-init>
-            <input type="text" id="id_unique_produk_edit" class="form-control" name="id_unique_produk" required>
+            <input type="text" id="id_unique_produk_edit" class="form-control" name="id_unique_kupon" required>
             <label for="id_unique_produk_edit" class="form-label">ID Kupon</label>
           </div>
 
           <div class="col-12 mb-4">
-            <label class="visually-hidden" for="harga_produk">Max Nominal Potongan</label>
+            <label class="visually-hidden" for="max_nominal_kupon_edit">Max Nominal Potongan</label>
             <div class="input-group">
               <div class="input-group-text">Rp.</div>
-              <input type="number" class="form-control harga_produk" id="harga_produk_edit" placeholder="Harga Produk"
-                required />
+              <input type="number" class="form-control" id="max_nominal_kupon_edit" name="max_nominal_kupon"
+                placeholder="Max Nominal Potongan" required />
             </div>
+            <small class="form-text text-muted">Isi 0 untuk tanpa batasan potongan</small>
           </div>
 
           <div class="col-12 mb-4">
-            <label class="visually-hidden" for="harga_promo_edit">Discount</label>
+            <label class="visually-hidden" for="discount_kupon_edit">Discount</label>
             <div class="input-group">
-              <input type="number" class="form-control harga_promo" id="harga_promo_edit" placeholder="Harga Promo"
-                required />
+              <input type="number" class="form-control harga_promo" id="discount_kupon_edit" placeholder="30"
+                name="discount_kupon" required />
               <div class="input-group-text">%</div>
-              <small class="form-text text-muted" id="error_harga_promo"></small>
             </div>
+            <small class="form-text text-muted">maximal potongan 99%</small>
           </div>
 
           <div class="form-outline mb-4">
-            <select name="level" id="level_edit" class="form-select">
+            <label for="level_kupon_edit" class="form-label">Level Kupon</label>
+            <select name="level" id="level_kupon_edit" class="form-select" name="level_kupon">
               <option value="0">Level 0 (Untuk Customer Baru)</option>
               <option value="1">Level 1 (3x Transaksi)</option>
               <option value="2">Level 2 (5x Transaksi)</option>
               <option value="3">Level 3 (10x Transaksi)</option>
             </select>
-            <label for="level_edit" class="form-label">Level Kupon</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
             <textarea name="deskripsi_kupon" id="deskripsi_kupon_edit" class="form-control" required></textarea>
-            <label for="deskripsi_kupon_edit" class="form-label">Deskripsi Kupon</label>
+            <label for="deskripsi_kupon_edit" class="form-label" name="deskripsi_kupon">Deskripsi Kupon</label>
           </div>
 
         </div>
@@ -173,12 +182,13 @@
 <?= $this->section('script'); ?>
 
 <script>
-const edit = (id, id_unique_produk, level, deskripsi, nominal) => {
+const edit = (id, id_unique_produk, max, discount, level, deskripsi) => {
   $('#id_kupon').val(id);
   $('#id_unique_produk_edit').val(id_unique_produk);
-  $('#level_edit').val(level);
+  $('#max_nominal_kupon_edit').val(max);
+  $('#discount_kupon_edit').val(discount);
+  $('#level_kupon_edit option[value="' + level + '"]').attr('selected', 'selected');
   $('#deskripsi_kupon_edit').val(deskripsi);
-  $('#harga_promo_edit').val(nominal);
   var modal = new mdb.Modal(document.getElementById('edit'));
 
   modal.show();

@@ -23,6 +23,10 @@
       <a href="/OperatorPanel/Review" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
         <i class="fa-solid fa-comment-dots fa-fw me-3"></i>
         <span>Review</span></a>
+      <a href="/OperatorPanel/Ongkos_kirim" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init="">
+        <i class="fa-solid fa-truck fa-fw me-3"></i>
+        <span>Ongkos Kirim</span>
+      </a>
     </div>
   </div>
 </nav>

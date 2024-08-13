@@ -21,7 +21,7 @@
     <ul class="navbar-nav ms-auto d-flex flex-row">
 
       <li class="nav-item me-3 me-lg-0">
-        <a class="nav-link" href="/OperatorLogin/Logoff">
+        <a class="btn btn-primary" href="/OperatorLogin/Logoff">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>

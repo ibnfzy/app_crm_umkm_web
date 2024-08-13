@@ -33,9 +33,9 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   $routes->post('Produk', 'OperatorPanel::produk_add');
   $routes->post('Produk/edit', 'OperatorPanel::produk_edit');
   $routes->get('Produk/(:num)', 'OperatorPanel::produk_delete/$1');
-
-  $routes->get('Produk/AddSingleImage', 'OperatorPanel::produk_add_single_image');
-  $routes->get('Produk/DeleteSingleImage/(:num)', 'OperatorPanel::produk_delete_single_image/$1');
+  $routes->get('manage_images/(:num)', 'OperatorPanel::produk_get_images/$1');
+  $routes->get('delete_image/(:num)', 'OperatorPanel::produk_delete_single_image/$1');
+  $routes->post('upload_images', 'OperatorPanel::produk_add_images');
 
   $routes->get('Pelanggan', 'OperatorPanel::pelanggan');
   $routes->get('Kupon', 'OperatorPanel::kupon');
@@ -43,9 +43,13 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   $routes->post('Kupon/edit', 'OperatorPanel::kupon_edit');
   $routes->get('Kupon/(:num)', 'OperatorPanel::kupon_delete/$1');
 
-
   $routes->get('Transaksi', 'OperatorPanel::transaksi');
   $routes->get('Review', 'OperatorPanel::review');
+
+  $routes->get('Ongkos_kirim', 'OperatorPanel::ongkir');
+  $routes->post('Ongkos_kirim', 'OperatorPanel::ongkir_add');
+  $routes->post('Ongkos_kirim/edit', 'OperatorPanel::ongkir_edit');
+  $routes->get('Ongkos_kirim/(:num)', 'OperatorPanel::ongkir_delete/$1');
 });
 
 $routes->group('CustomerPanel', function (RouteCollection $routes) {
