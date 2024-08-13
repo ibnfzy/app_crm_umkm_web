@@ -27,8 +27,7 @@
             <td>
               <button onclick="edit('<?= $item['id_ongkir'] ?>', '<?= $item['nama_kota'] ?>', '<?= $item['tarif'] ?>')"
                 class="btn btn-warning btn-sm">Edit</button>
-              <a href="/OperatorPanel/Ongkos_kirim/delete/<?= $item['id_ongkir'] ?>"
-                class="btn btn-danger btn-sm">Delete</a>
+              <a href="/OperatorPanel/Ongkos_kirim/<?= $item['id_ongkir'] ?>" class="btn btn-danger btn-sm">Delete</a>
             </td>
           </tr>
           <?php endforeach ?>
@@ -54,10 +53,10 @@
           </div>
 
           <div class="col-12 mb-4">
-            <label class="visually-hidden" for="harga_produk">Tarif</label>
+            <label class="" for="harga_produk">Tarif</label>
             <div class="input-group">
               <div class="input-group-text">Rp.</div>
-              <input type="number" class="form-control" id="tarif" placeholder="Tarif" required />
+              <input type="number" class="form-control" id="tarif" placeholder="Tarif" name="tarif" required />
             </div>
           </div>
 
@@ -80,7 +79,7 @@
         <button type="button" class="btn-close bg-white" data-mdb-ripple-init data-mdb-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <form action="/OperatorPanel/Ongkos_kirim" method="post">
+      <form action="/OperatorPanel/Ongkos_kirim/edit" method="post">
         <input type="hidden" id="id_ongkir" name="id_ongkir">
         <div class="modal-body">
           <div class="mb-4">
@@ -89,10 +88,10 @@
           </div>
 
           <div class="col-12 mb-4">
-            <label class="visually-hidden" for="harga_produk">Tarif</label>
+            <label class="" for="harga_produk">Tarif</label>
             <div class="input-group">
               <div class="input-group-text">Rp.</div>
-              <input type="number" class="form-control" id="tarif-edit" placeholder="Tarif" required />
+              <input type="number" class="form-control" id="tarif-edit" placeholder="Tarif" name="tarif" required />
             </div>
           </div>
 
@@ -114,8 +113,8 @@
 <script>
 const edit = (id, nama_kota, tarif) => {
   $('#id_ongkir').val(id);
-  $('#nama_kota_edit').val(nama_kota);
-  $('#tarif_edit').val(tarif);
+  $('#nama_kota-edit').val(nama_kota);
+  $('#tarif-edit').val(tarif);
   var modal = new mdb.Modal(document.getElementById('edit'));
 
   modal.show();

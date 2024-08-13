@@ -426,7 +426,7 @@ class OperatorPanel extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->to(base_url('OperatorPanel/Ongkir'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+            return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
         }
 
         $this->db->table('ongkir')->insert([
@@ -434,7 +434,7 @@ class OperatorPanel extends BaseController
             'nama_kota' => $this->request->getPost('nama_kota')
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Ongkir'))->with('type-status', 'success')->with('message', 'Ongkir ditambahkan');
+        return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'success')->with('message', 'Ongkir ditambahkan');
     }
 
     /**
@@ -461,7 +461,7 @@ class OperatorPanel extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->to(base_url('OperatorPanel/Ongkir'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+            return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
         }
 
         $this->db->table('ongkir')->where('id_ongkir', $this->request->getPost('id_ongkir'))->update([
@@ -469,7 +469,7 @@ class OperatorPanel extends BaseController
             'nama_kota' => $this->request->getPost('nama_kota')
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Ongkir'))->with('type-status', 'success')->with('message', 'Ongkir diedit');
+        return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'success')->with('message', 'Ongkir diedit');
     }
 
     /**
@@ -482,6 +482,6 @@ class OperatorPanel extends BaseController
     public function ongkir_delete($id)
     {
         $this->db->table('ongkir')->where('id_ongkir', $id)->delete();
-        return redirect()->to(base_url('OperatorPanel/Ongkir'))->with('type-status', 'success')->with('message', 'Ongkir dihapus');
+        return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'success')->with('message', 'Ongkir dihapus');
     }
 }
