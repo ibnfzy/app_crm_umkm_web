@@ -484,4 +484,90 @@ class OperatorPanel extends BaseController
         $this->db->table('ongkir')->where('id_ongkir', $id)->delete();
         return redirect()->to(base_url('OperatorPanel/Ongkos_kirim'))->with('type-status', 'success')->with('message', 'Ongkir dihapus');
     }
+
+    public function slider()
+    {
+        return view('operator_panel/slider', [
+            'data' => $this->db->table('slider')->orderBy('id_slider', 'DESC')->get()->getResultArray()
+        ]);
+    }
+
+    public function slider_add()
+    {
+        $rules = [
+            'file' => [
+                'rules' => 'uploaded[file]|max_size[file, 1024]|is_image[file]|mime_in[file,image/png,image/jpg,image/jpeg]',
+                'errors' => [
+                    'uploaded' => 'File harus diunggah',
+                    'max_size' => 'Ukuran file terlalu besar',
+                    'is_image' => 'File harus berupa gambar',
+                    'mime_in' => 'File harus berupa gambar'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $file = $this->request->getFile('file');
+        $fileName = $file->getRandomName();
+        $file->move('uploads', $fileName);
+
+        $this->db->table('slider')->insert([
+            'file' => $fileName
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'success')->with('message', 'Slider ditambahkan');
+    }
+
+    public function slider_delete($id)
+    {
+        $getFiles = $this->db->table('slider')->where('id_slider', $id)->get()->getResultArray();
+
+        foreach ($getFiles as $item) {
+            if (file_exists('uploads/' . $item['file'])) {
+                unlink('uploads/' . $item['file']);
+            }
+        }
+
+        $this->db->table('slider')->where('id_slider', $id)->delete();
+        return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'success')->with('message', 'Slider dihapus');
+    }
+
+    public function slider_edit()
+    {
+        $rules = [
+            'file' => [
+                'rules' => 'max_size[file, 1024]|is_image[file]|mime_in[file,image/png,image/jpg,image/jpeg]',
+                'errors' => [
+                    'max_size' => 'Ukuran file terlalu besar',
+                    'is_image' => 'File harus berupa gambar',
+                    'mime_in' => 'File harus berupa gambar'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $getFiles = $this->db->table('slider')->where('id_slider', $this->request->getPost('id_slider'))->get()->getResultArray();
+
+        foreach ($getFiles as $item) {
+            if (file_exists('uploads/' . $item['file'])) {
+                unlink('uploads/' . $item['file']);
+            }
+        }
+
+        $file = $this->request->getFile('file');
+        $fileName = $file->getRandomName();
+        $file->move('uploads', $fileName);
+
+        $this->db->table('slider')->where('id_slider', $this->request->getPost('id_slider'))->update([
+            'file' => $fileName
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'success')->with('message', 'Slider diedit');
+    }
 }

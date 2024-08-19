@@ -27,6 +27,10 @@
         <i class="fa-solid fa-truck fa-fw me-3"></i>
         <span>Ongkos Kirim</span>
       </a>
+      <a href="/OperatorPanel/Slider" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init="">
+        <i class="fa-solid fa-images fa-fw me-3"></i>
+        <span>Slider</span>
+      </a>
     </div>
   </div>
 </nav>

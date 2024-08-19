@@ -50,6 +50,11 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   $routes->post('Ongkos_kirim', 'OperatorPanel::ongkir_add');
   $routes->post('Ongkos_kirim/edit', 'OperatorPanel::ongkir_edit');
   $routes->get('Ongkos_kirim/(:num)', 'OperatorPanel::ongkir_delete/$1');
+
+  $routes->get('Slider', 'OperatorPanel::slider');
+  $routes->post('Slider', 'OperatorPanel::slider_add');
+  $routes->post('Slider/edit', 'OperatorPanel::slider_edit');
+  $routes->get('Slider/(:num)', 'OperatorPanel::slider_delete/$1');
 });
 
 $routes->group('CustomerPanel', function (RouteCollection $routes) {
