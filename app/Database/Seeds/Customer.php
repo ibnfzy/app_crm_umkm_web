@@ -15,6 +15,9 @@ class Customer extends Seeder
             'nama_customer' => $faker->name,
             'email_customer' => $faker->email,
             'password_customer' => password_hash('12345', PASSWORD_DEFAULT),
+            'no_wa' => '623211232123',
+            'id_ongkir' => 1,
+            'alamat' => 'Jl Adiaksa'
         ]);
 
         $this->db->table('customer')->insert([
@@ -22,6 +25,9 @@ class Customer extends Seeder
             'nama_customer' => $faker->name,
             'email_customer' => 'a@a.com',
             'password_customer' => password_hash('12345', PASSWORD_DEFAULT),
+            'no_wa' => '623211232123',
+            'id_ongkir' => 1,
+            'alamat' => 'Jl Adiaksa'
         ]);
     }
 }

@@ -20,6 +20,9 @@ class Customer extends Migration
                 'null' => true,
                 'constraint' => 32,
             ],
+            'id_ongkir' => [
+                'type' => 'INT',
+            ],
             'nama_customer' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
@@ -29,6 +32,13 @@ class Customer extends Migration
                 'constraint' => 255,
             ],
             'password_customer' => [
+                'type' => 'TEXT'
+            ],
+            'no_wa' => [
+              'type' => 'VARCHAR',
+              'constraint' => 13
+            ],
+            'alamat' => [
                 'type' => 'TEXT'
             ],
             'created_at' => [

@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\CustomerAuth;
 use App\Filters\OperatorAuth;
 use App\Filters\OperatorLogin;
 use CodeIgniter\Config\Filters as BaseFilters;
@@ -38,6 +39,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'operator_auth' => OperatorAuth::class,
         'operator_login' => OperatorLogin::class,
+        'customer' => CustomerAuth::class,
     ];
 
     /**
@@ -110,5 +112,6 @@ class Filters extends BaseFilters
     public array $filters = [
         'operator_auth' => ['before' => ['OperatorPanel/*', 'OperatorPanel']],
         'operator_login' => ['before' => ['OperatorLogin/*', 'OperatorLogin']],
+        'customer' => ['before' => ['CustomerPanel/*', 'CustomerPanel']],
     ];
 }

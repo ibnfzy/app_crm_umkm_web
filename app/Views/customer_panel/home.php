@@ -14,16 +14,16 @@
           <div class="card-body box-profile">
 
 
-            <h3 class="profile-username text-center mt-1 text-primary">BUNGA DESA</h3>
+            <h3 class="profile-username text-center mt-1 text-primary"><?= session()->get('nama_customer') ;?></h3>
 
             <p class="text-muted text-center"><i class="fa fa-pencil"></i> Edit</p>
 
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
-                <b>Kontak</b> <span class="float-end">32</span>
+                <b>Kontak</b> <span class="float-end"><?= session()->get('no_wa') ;?></span>
               </li>
               <li class="list-group-item">
-                <b>Alamat</b> <span class="float-end">32</span>
+                <b>Alamat</b> <span class="float-end"><?= session()->get('alamat') ;?></span>
               </li>
             </ul>
           </div>

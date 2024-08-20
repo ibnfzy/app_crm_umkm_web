@@ -17,8 +17,8 @@
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Akun</a>
             <div class="dropdown-menu">
-              <a href="<?= base_url('Login') ?>" class="dropdown-item text-white">Login</a>
-              <a href="<?= base_url('Daftar') ?>" class="dropdown-item text-white">Register</a>
+              <a href="<?= base_url('CustomerAuth') ?>" class="dropdown-item text-white">Login</a>
+              <a href="<?= base_url('CustomerAuth/Register') ?>" class="dropdown-item text-white">Register</a>
             </div>
           </div>
         </div>

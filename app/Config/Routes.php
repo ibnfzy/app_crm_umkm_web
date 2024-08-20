@@ -20,6 +20,9 @@ $routes->group('OperatorLogin', function (RouteCollection $routes) {
 $routes->group('CustomerAuth', function (RouteCollection $routes) {
   $routes->get('/', 'CustomerAuth::index');
   $routes->get('Register', 'CustomerAuth::register');
+  $routes->post('/', 'CustomerAuth::auth');
+  $routes->get('Logoff', 'CustomerAuth::logout');
+  $routes->post('Register', 'CustomerAuth::register_action');
 });
 
 $routes->group('OperatorPanel', function (RouteCollection $routes) {
