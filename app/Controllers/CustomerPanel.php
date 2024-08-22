@@ -185,9 +185,42 @@ class CustomerPanel extends BaseController
         return redirect()->to(base_url('CustomerPanel/Invoice/' . $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Upload bukti pembayaran berhasil');
     }
 
+    public function getKuponBaseOnTransaksi($id_customer)
+    {
+        $checkTransaksi = $this->db->table('transaksi')->where('id_customer', $id_customer)->get()->getResultArray();
+
+        $GetLevel = null;
+
+        if (count($checkTransaksi) >= 8) {
+            $GetLevel = 3;
+        }
+
+        if (count($checkTransaksi) >= 5) {
+            $GetLevel = 2;
+        }
+
+        if (count($checkTransaksi) >= 3) {
+            $GetLevel = 1;
+        }
+
+        if ($GetLevel) {
+            $getRandomKupon = $this->db->table('kupon')->where('level_kupon', $GetLevel)->orderBy('id_kupon', 'DESC')->get()->getRowArray();
+
+           return $this->db->table('customer_kupon')->insert([
+                'id_customer' => $id_customer,
+                'id_kupon' => $getRandomKupon['id_kupon'],
+                'expired_at' => date('Y-m-d', strtotime('+1 month')),
+            ]);
+        }
+
+        return null;
+    }
+
     public function konfirmasi_pesanan()
     {
         $this->db->table('transaksi')->where('id_transaksi', $this->request->getPost('id_transaksi'))->update(['status_transaksi' => 'Transaksi Berhasil']);
+
+        $this->getKuponBaseOnTransaksi(session()->get('id_customer'));
 
         return redirect()->to(base_url('CustomerPanel/Invoice/' . $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Konfirmasi pesanan berhasil');
     }

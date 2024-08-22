@@ -40,6 +40,8 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   });
 
   $routes->get('Profile', 'OperatorPanel::index');
+  $routes->post('Informasi', 'OperatorPanel::informasi_edit');
+  $routes->post('Password', 'OperatorPanel::password_edit');
 
   $routes->get('Produk', 'OperatorPanel::produk');
   $routes->post('Produk', 'OperatorPanel::produk_add');

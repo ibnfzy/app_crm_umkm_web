@@ -30,7 +30,7 @@ $hargaArr = [];
                 <li class="text-muted"><?= $data_customer['alamat']; ?></li>
                 <li class="text-muted"><?= $data_customer['nama_kota']; ?></li>
                 <li class="text-muted"><i class="fas fa-phone"></i>
-                  <?= preg_replace('/(\d{2})(\d{11})/m', "+$1 $2", $data_customer['no_wa']); ?></li>
+                  <?= preg_replace('/(\d{2})(\d{10})/m', "+$1 $2", $data_customer['no_wa']); ?></li>
               </ul>
             </div>
             <div class="col-xl-4">
@@ -89,7 +89,7 @@ $hargaArr = [];
             <div class="col-xl-8">
               <p class="ms-3">
                 Silahkan lakukan pembayaran dengan transfer ke rekening berikut: <br>
-                <span class="badge bg-primary fw-bold"> BRI 1234567890 a.n. Bunga Desa</span>
+                <span class="badge bg-primary fw-bold"> <?= session()->get('dataToko')['rekening_toko']; ?> </span>
               </p>
             </div>
             <?php

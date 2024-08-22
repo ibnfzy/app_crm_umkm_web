@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>BUNGA DESA</title>
+  <title><?= strtoupper(session()->get('dataToko')['nama_toko']); ?></title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="BUNGA DESA" name="keywords">
+  <meta content="<?= strtoupper(session()->get('dataToko')['nama_toko']); ?>" name="keywords">
   <meta content="" name="description">
 
   <!-- Favicon -->
@@ -72,23 +72,23 @@
   <?= $this->renderSection('script'); ?>
 
   <script>
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": true,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
   </script>
 
   <?php

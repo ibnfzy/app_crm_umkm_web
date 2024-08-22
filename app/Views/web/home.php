@@ -36,7 +36,7 @@ $db = \Config\Database::connect();
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <h1>Selamat Datang di website Bunga Desa</h1>
+        <h1>Selamat Datang di website <?= strtoupper(session()->get('dataToko')['nama_toko']); ?></h1>
       </div>
       <div class="col-md-6">
         <p class="text-white">
@@ -54,7 +54,7 @@ $db = \Config\Database::connect();
 <div class="featured-product product">
   <div class="container-fluid">
     <div class="section-header">
-      <h1>Produk Bunga Desa</h1>
+      <h1>Produk <?= strtoupper(session()->get('dataToko')['nama_toko']); ?></h1>
     </div>
     <div class="row align-items-center product-slider product-slider-4">
       <?php foreach ((array) $dataProduk as $item) : ?>

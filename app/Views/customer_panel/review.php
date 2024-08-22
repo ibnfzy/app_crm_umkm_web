@@ -27,7 +27,7 @@
               <td><?= $item['rating']; ?></td>
               <td><?= $item['review']; ?></td>
               <td>
-                <a href="<?= base_url('review/' . $item['id_detail_review']); ?>" class="btn btn-info btn-sm">Detail</a>
+                <a href="/CustomerPanel/Review/<?= $item['id_detail_review']; ?>" class="btn btn-danger btn-sm">Hapus</a>
               </td>
             </tr>
           <?php endforeach ?>

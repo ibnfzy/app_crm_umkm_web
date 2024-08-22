@@ -47,7 +47,7 @@
       <div class="col-md-3">
         <div class="logo">
           <a href="<?= base_url() ?>">
-            <h5 class="font-weight-bold text-lg-center">BUNGA DESA</h5>
+            <h5 class="font-weight-bold text-lg-center"> <?= strtoupper(session()->get('dataToko')['nama_toko']); ?></h5>
           </a>
         </div>
       </div>

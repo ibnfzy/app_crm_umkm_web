@@ -22,7 +22,9 @@ class OperatorPanel extends BaseController
      */
     public function index()
     {
-        return view('operator_panel/home');
+        return view('operator_panel/home', [
+            'dataTransaksiValidasi' => $this->db->table('transaksi')->join('customer', 'customer.id_customer = transaksi.id_customer')->where('transaksi.status_transaksi', 'Menunggu validasi bukti pembayaran')->orderBy('transaksi.id_transaksi', 'DESC')->get()->getResultArray(),
+        ]);
     }
 
     /**
@@ -396,7 +398,7 @@ class OperatorPanel extends BaseController
             'status_transaksi' => 'Pembayaran diterima, menunggu pesanan diproses'
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Invoice/'. $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diterima');
+        return redirect()->to(base_url('OperatorPanel/Invoice/' . $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diterima');
     }
 
     public function proses()
@@ -407,7 +409,7 @@ class OperatorPanel extends BaseController
             'nomor_resi' => $this->request->getPost('nomor_resi')
         ]);
 
-        return redirect()->to(base_url('OperatorPanel/Invoice/'. $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diproses');
+        return redirect()->to(base_url('OperatorPanel/Invoice/' . $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diproses');
     }
 
     /**
@@ -601,5 +603,68 @@ class OperatorPanel extends BaseController
         ]);
 
         return redirect()->to(base_url('OperatorPanel/Slider'))->with('type-status', 'success')->with('message', 'Slider diedit');
+    }
+
+    public function informasi_edit()
+    {
+        $rules = [
+            'username' => [
+                'rules' => 'max_length[255]',
+                'errors' => [
+                    'max_length' => 'Username Maksimal 255 karakter'
+                ]
+            ],
+            'nama_toko' => [
+                'rules' => 'max_length[255]',
+                'errors' => [
+                    'max_length' => 'Nama Toko Maksimal 255 karakter'
+                ]
+            ],
+            'kontak_wa' => [
+                'rules' => 'max_length[13]',
+                'errors' => [
+                    'max_length' => 'Kontak Whatsapp Maksimal 13 karakter'
+                ]
+            ],
+            'alamat' => [
+                'rules' => 'max_length[255]',
+                'errors' => [
+                    'max_length' => 'Alamat Maksimal 255 karakter'
+                ]
+            ],
+            'rekening_toko' => [
+                'rules' => 'max_length[255]',
+                'errors' => [
+                    'max_length' => 'Rekening TokoMaksimal 255 karakter'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $this->db->table('informasi_toko')->where('id_informasi', '1')->update([
+            'nama_toko' => $this->request->getPost('nama_toko'),
+            'kontak_wa' => $this->request->getPost('kontak_wa'),
+            'alamat' => $this->request->getPost('alamat'),
+            'rekening_toko' => $this->request->getPost('rekening_toko'),
+            'tentang' => $this->request->getPost('tentang')
+        ]);
+
+        $this->db->table('operator')->where('id_operator', $this->request->getPost('id_operator'))->update([
+            'username' => $this->request->getPost('username') 
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'success')->with('message', 'Informasi diedit');
+    }
+
+    public function password_edit()
+    {
+        $this->db->table('operator')->where('id_operator', $this->request->getPost('id_operator'))->update([
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT)
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'success')->with('message', 'Password diedit');
     }
 }

@@ -80,6 +80,21 @@ class CustomerAuth extends BaseController
         return redirect()->to(base_url('CustomerAuth'));
     }
 
+    public function getKuponNewCustomer($id_customer)
+    {
+        $getRandomKupon = $this->db->table('kupon')->where('level_kupon', '0')->orderBy('id_kupon', 'RANDOM')->get(2)->getResultArray();
+
+        foreach ($getRandomKupon as $key => $value) {
+            $this->db->table('customer_kupon')->insert([
+                'id_customer' => $id_customer,
+                'id_kupon' => $value['id_kupon'],
+                'expired_at' => date('Y-m-d', strtotime('+5 month')),
+            ]);
+        }
+
+        return true;
+    }
+
     public function register_action()
     {
         $rules = [
@@ -148,6 +163,8 @@ class CustomerAuth extends BaseController
             'id_ongkir' => $getOngkir['id_ongkir'],
             'alamat' => $this->request->getPost('alamat')
         ]);
+
+        $this->getKuponNewCustomer($this->db->insertID());
 
         return redirect()->to(base_url('CustomerLogin'))->with('type-status', 'info')->with('message', 'Akun anda sudah terdaftar silahkan login');
     }

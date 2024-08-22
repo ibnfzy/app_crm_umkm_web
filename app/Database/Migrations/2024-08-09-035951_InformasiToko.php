@@ -13,6 +13,10 @@ class InformasiToko extends Migration
                 'type' => 'INT',
                 'auto_increment' => true
             ],
+            'nama_toko' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255
+            ],
             'tentang' => [
                 'type' => 'TEXT'
             ],
@@ -24,6 +28,10 @@ class InformasiToko extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255
             ],
+            'rekening_toko' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255
+            ]
         ]);
 
         $this->forge->addKey('id_informasi_toko', true);

@@ -10,7 +10,7 @@
 
     <!-- Brand -->
     <a class="navbar-brand" href="#">
-      <h3><span class="text-primary">BUNGA</span> DESA </h3>
+      <h3><span class="text-primary"> <?= strtoupper(session()->get('dataToko')['nama_toko']); ?></span> </h3>
     </a>
 
     <a href="#" class="navbar-brand ms-auto">
