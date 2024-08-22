@@ -34,7 +34,7 @@
 <body>
   <?php
   $db = \Config\Database::connect();
-  // $get = $db->table('informasi_toko')->where('id_toko', 1)->get()->getRowArray();
+  $get = $db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray();
   ?>
   <?= $this->include('web/layouts/navbar'); ?>
 
@@ -43,7 +43,7 @@
   <?= $this->include('web/layouts/footer'); ?>
 
   <div class="floating-button">
-    <a href="https://wa.me/#" target="_blank">
+    <a href="https://wa.me/<?= $get['kontak_wa'] ?>" target="_blank">
       <i class="fab fa-whatsapp fa-2x"></i>
       <span class="text">Hubungi Kami</span>
     </a>

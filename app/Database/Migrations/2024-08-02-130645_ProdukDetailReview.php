@@ -26,7 +26,7 @@ class ProdukDetailReview extends Migration
                 'type' => 'CHAR(1)',
             ],
             'review' => [
-                'type' => 'TINYINT'
+                'type' => 'TEXT'
             ],
             'created_at' => [
                 'type' => 'DATETIME',

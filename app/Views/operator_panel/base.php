@@ -21,6 +21,8 @@
     integrity='sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=='
     crossorigin='anonymous' />
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+  <!-- Lightbox2 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/panel_assets/css/admin.css">
 </head>
 
@@ -41,6 +43,11 @@
   </main>
   <!--Main layout-->
 
+  <div id="lightbox" class="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
   <!-- MDB -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='
@@ -55,43 +62,46 @@
 
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 
+  <!-- Include FancyBox JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
   <?= $this->renderSection('script'); ?>
   <script>
-  const currentRoute = window.location.pathname;
+    const currentRoute = window.location.pathname;
 
-  document.querySelectorAll('.list-group-item').forEach((item) => {
-    // const link = item.querySelector('a');
-    if (item.getAttribute('href') === currentRoute) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
+    document.querySelectorAll('.list-group-item').forEach((item) => {
+      // const link = item.querySelector('a');
+      if (item.getAttribute('href') === currentRoute) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    new DataTable('#datatables', {
+      responsive: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json'
+      }
+    });
+
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
     }
-  });
-
-  new DataTable('#datatables', {
-    responsive: true,
-    language: {
-      url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json'
-    }
-  });
-
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": true,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
   </script>
 
   <?php
@@ -106,46 +116,6 @@
       session()->getFlashdata('type-status') . '"]("' . session()->getFlashdata('message') . '")</script>';
   }
   ?>
-
-  <script>
-  // Graph
-  var ctx = document.getElementById("myChart");
-
-  var myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-        lineTension: 0,
-        backgroundColor: "transparent",
-        borderColor: "#007bff",
-        borderWidth: 4,
-        pointBackgroundColor: "#007bff",
-      }, ],
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false,
-          },
-        }, ],
-      },
-      legend: {
-        display: false,
-      },
-    },
-  });
-  </script>
 </body>
 
 </html>

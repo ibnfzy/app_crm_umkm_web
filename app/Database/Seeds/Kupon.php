@@ -15,6 +15,8 @@ class Kupon extends Seeder
             3 => [30, 35, 38],
         ];
 
+        $customerId = [1, 2];
+
         $kuponLvl = [1, 2, 3];
 
         $faker = Factory::create();
@@ -28,6 +30,15 @@ class Kupon extends Seeder
                 'max_nominal_kupon' => $faker->randomFloat(2, 100000, 10000000),
                 'discount_kupon' => $discount,
                 'level_kupon' => $level,
+            ]);
+        }
+
+        $getRandomKupon = $this->db->table('kupon')->orderBy('id_kupon', 'DESC')->get(3)->getResultArray();
+
+        for ($i = 0; $i < 8; $i++) {
+            $this->db->table('customer_kupon')->insert([
+                'id_customer' => $customerId[array_rand($customerId)],
+                'id_kupon' => $getRandomKupon[array_rand($getRandomKupon)]['id_kupon'],
             ]);
         }
     }

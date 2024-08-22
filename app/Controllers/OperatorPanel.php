@@ -374,8 +374,40 @@ class OperatorPanel extends BaseController
     public function transaksi()
     {
         return view('operator_panel/transaksi', [
-            'data' => $this->db->table('transaksi')->orderBy('id_transaksi', 'DESC')->get()->getResultArray()
+            'data' => $this->db->table('transaksi')->join('customer', 'customer.id_customer = transaksi.id_customer')->orderBy('transaksi.id_transaksi', 'DESC')->get()->getResultArray()
         ]);
+    }
+
+    public function invoice($id)
+    {
+        $getDataTransaksi = $this->db->table('transaksi')->where('id_transaksi', $id)->get()->getRowArray();
+
+        return view('operator_panel/invoice', [
+            'data_transaksi' => $getDataTransaksi,
+            'data_detail' => $this->db->table('transaksi_detail')->join('produk', 'produk.id_produk = transaksi_detail.id_produk')->where('id_transaksi', $id)->get()->getResultArray(),
+            'data_toko' => $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray(),
+            'data_customer' => $this->db->table('customer')->join('ongkir', 'ongkir.id_ongkir = customer.id_ongkir')->where('customer.id_customer', $getDataTransaksi['id_customer'])->get()->getRowArray()
+        ]);
+    }
+
+    public function validasi()
+    {
+        $this->db->table('transaksi')->where('id_transaksi', $this->request->getPost('id_transaksi'))->update([
+            'status_transaksi' => 'Pembayaran diterima, menunggu pesanan diproses'
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Invoice/'. $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diterima');
+    }
+
+    public function proses()
+    {
+        $this->db->table('transaksi')->where('id_transaksi', $this->request->getPost('id_transaksi'))->update([
+            'status_transaksi' => 'Pesanan diserahkan ke ekspedisi',
+            'nama_ekspedisi' => $this->request->getPost('nama_ekspedisi'),
+            'nomor_resi' => $this->request->getPost('nomor_resi')
+        ]);
+
+        return redirect()->to(base_url('OperatorPanel/Invoice/'. $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Transaksi diproses');
     }
 
     /**

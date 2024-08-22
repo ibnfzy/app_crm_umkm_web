@@ -1,5 +1,5 @@
 (function ($) {
-  "use strict";
+  ("use strict");
 
   // Dropdown on mouse hover
   $(document).ready(function () {
@@ -199,6 +199,8 @@
   $(".qty button").on("click", function () {
     var $button = $(this);
     var oldValue = $button.parent().find("input").val();
+    let stok = $button.parent().find("input").data("stok");
+    
     if ($button.hasClass("btn-plus")) {
       var newVal = parseFloat(oldValue) + 1;
     } else {
@@ -209,7 +211,28 @@
       }
     }
     $button.parent().find("input").val(newVal);
+    updateQtyCart($button.parent().find("input").attr("id"), stok);
   });
+
+  $(".qty input").on("change", function () {
+    updateQtyCart($(this).attr("id"), $(this).data("stok"));
+    console.log($(this).data("stok"));
+  });
+
+  function updateQtyCart(idQty, stok) {
+    let qty = $("#" + idQty);
+    let currentQty = parseInt(qty.val());
+
+    if (currentQty > stok) {
+      qty.val(stok);
+      
+    } else if (currentQty < 0) {
+      
+      qty.val(1);
+    } else {
+      qty.val(currentQty);
+    }
+  }
 
   // Shipping address show hide
   $(".checkout #shipto").change(function () {

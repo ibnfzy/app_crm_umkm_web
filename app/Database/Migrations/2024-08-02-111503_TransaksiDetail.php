@@ -21,10 +21,6 @@ class TransaksiDetail extends Migration
                 'type' => 'TINYINT(3) ZEROFILL',
                 'unsigned' => true
             ],
-            'id_customer' => [
-                'type' => 'TINYINT(3) ZEROFILL',
-                'unsigned' => true
-            ],
             'kuantitas' => [
                 'type' => 'SMALLINT'
             ],
@@ -39,7 +35,6 @@ class TransaksiDetail extends Migration
         $this->forge->addKey('id_detail_transaksi', true);
         $this->forge->addForeignKey('id_transaksi', 'transaksi', 'id_transaksi');
         $this->forge->addForeignKey('id_produk', 'produk', 'id_produk');
-        $this->forge->addForeignKey('id_customer', 'customer', 'id_customer');
         $this->forge->createTable('transaksi_detail');
     }
 

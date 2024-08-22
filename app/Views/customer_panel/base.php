@@ -22,6 +22,34 @@
     crossorigin='anonymous' />
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" href="/panel_assets/css/admin.css">
+
+  <style>
+    .rating {
+      direction: rtl;
+      font-size: 2em;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .rating input:checked~label {
+      color: #f5b301;
+    }
+
+    .rating label:hover,
+    .rating label:hover~label {
+      color: #f5b301;
+    }
+  </style>
 </head>
 
 <body>
@@ -58,36 +86,36 @@
   <?= $this->renderSection('script'); ?>
 
   <script>
-  const currentRoute = window.location.pathname;
+    const currentRoute = window.location.pathname;
 
-  document.querySelectorAll('.list-group-item').forEach((item) => {
-    // const link = item.querySelector('a');
-    if (item.getAttribute('href') === currentRoute) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
+    document.querySelectorAll('.list-group-item').forEach((item) => {
+      // const link = item.querySelector('a');
+      if (item.getAttribute('href') === currentRoute) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    new DataTable('#datatables');
+
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
     }
-  });
-
-  new DataTable('#datatables');
-
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": true,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
   </script>
 
   <?php
@@ -104,43 +132,43 @@
   ?>
 
   <script>
-  // Graph
-  var ctx = document.getElementById("myChart");
+    // Graph
+    var ctx = document.getElementById("myChart");
 
-  var myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
-      datasets: [{
-        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-        lineTension: 0,
-        backgroundColor: "transparent",
-        borderColor: "#007bff",
-        borderWidth: 4,
-        pointBackgroundColor: "#007bff",
-      }, ],
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false,
-          },
+    var myChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        datasets: [{
+          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+          lineTension: 0,
+          backgroundColor: "transparent",
+          borderColor: "#007bff",
+          borderWidth: 4,
+          pointBackgroundColor: "#007bff",
         }, ],
       },
-      legend: {
-        display: false,
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: false,
+            },
+          }, ],
+        },
+        legend: {
+          display: false,
+        },
       },
-    },
-  });
+    });
   </script>
 </body>
 

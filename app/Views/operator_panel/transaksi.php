@@ -17,7 +17,6 @@
             <th>Status Transaksi</th>
             <th>Hubungi Customer</th>
             <th>Invoice</th>
-            <th>Validasi Bukti Pemabayaran</th>
           </tr>
         </thead>
         <tbody>
@@ -31,13 +30,10 @@
             <td><?= $item['tanggal_checkout'] ?></td>
             <td><?= $item['status_transaksi'] ?></td>
             <td>
-              <a href="#" class="btn btn-success">Hubungi Customer</a>
+              <a href="https://wa.me/<?= $item['no_wa'] ?>" target="_blank" class="btn btn-success">Hubungi Customer</a>
             </td>
             <td>
-              <button class="btn btn-info">Invoice</button>
-            </td>
-            <td>
-              <a href="#" class="btn btn-warning">Bukti Pembayaran</a>
+              <a href="/OperatorPanel/Invoice/<?= $item['id_transaksi'] ?>" class="btn btn-info">Invoice</a>
             </td>
           </tr>
           <?php endforeach ?>

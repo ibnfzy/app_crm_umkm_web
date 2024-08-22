@@ -24,10 +24,17 @@ class Transaksi extends Migration
                 'type' => 'TINYINT(3) ZEROFILL',
                 'unsigned' => true
             ],
+            'id_kupon' => [
+                'type' => 'SMALLINT(5) ZEROFILL',
+                'unsigned' => true
+            ],
             'total_kuantitas_belanja' => [
                 'type' => 'SMALLINT'
             ],
             'total_bayar_belanja' => [
+                'type' => 'INT'
+            ],
+            'diskon' => [
                 'type' => 'INT'
             ],
             'bukti_bayar' => [
@@ -45,7 +52,20 @@ class Transaksi extends Migration
                 'type' => 'VARCHAR',
                 'default' => 'Menunggu Bukti Pembayaran',
                 'constraint' => 255
-            ]
+            ],
+            'max_potongan' => [
+                'type' => 'INT',
+            ],
+            'nama_ekspedisi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
+            'nomor_resi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
         ]);
 
         $this->forge->addKey('id_transaksi', true);

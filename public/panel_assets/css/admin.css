@@ -45,3 +45,25 @@ body {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
+
+@media print {
+  @page {
+        size: landscape;
+        margin: 0; /* Optional: Atur margin halaman */
+    }
+
+    /* Pastikan layout menyesuaikan dengan orientasi landscape */
+    .container {
+        width: 100%;
+    }
+
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+  .no-print {
+    display: none !important;
+  }
+}

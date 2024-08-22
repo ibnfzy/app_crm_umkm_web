@@ -1,20 +1,4 @@
-<!-- Footer Start -->
-<div class="footer">
-  <div class="container-fluid">
-    <div class="row">
 
-      <div class="col-lg-3 col-md-6">
-        <div class="footer-widget">
-          <h2>Fast Links</h2>
-          <ul>
-            <li><a href="/OperatorPanel/">Login Operator</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
 <!-- Footer End -->
 
 <!-- Footer Bottom Start -->

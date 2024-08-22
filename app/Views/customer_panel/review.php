@@ -18,7 +18,19 @@
           </tr>
         </thead>
         <tbody>
-
+          <?php foreach ($data as $key => $item) : ?>
+            <tr>
+              <td><?= $key + 1; ?></td>
+              <td><?= $item['id_unique_produk']; ?></td>
+              <td><?= $item['nama_produk']; ?></td>
+              <td><?= $item['nama_customer']; ?></td>
+              <td><?= $item['rating']; ?></td>
+              <td><?= $item['review']; ?></td>
+              <td>
+                <a href="<?= base_url('review/' . $item['id_detail_review']); ?>" class="btn btn-info btn-sm">Detail</a>
+              </td>
+            </tr>
+          <?php endforeach ?>
         </tbody>
       </table>
     </div>

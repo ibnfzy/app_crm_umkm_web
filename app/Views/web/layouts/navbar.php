@@ -12,13 +12,19 @@
         <div class="navbar-nav mr-auto">
           <a href="<?= base_url() ?>" class="nav-item nav-link">Home</a>
           <a href="<?= base_url('Katalog') ?>" class="nav-item nav-link">Katalog Produk</a>
+          <a href="<?= base_url('OperatorPanel') ?>" class="nav-item nav-link">Login Operator</a>
         </div>
-        <div class="navbar-nav ml-auto">
+        <div class="navbar-nav ml-auto px-5">
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Akun</a>
             <div class="dropdown-menu">
-              <a href="<?= base_url('CustomerAuth') ?>" class="dropdown-item text-white">Login</a>
-              <a href="<?= base_url('CustomerAuth/Register') ?>" class="dropdown-item text-white">Register</a>
+              <?php if (session()->get('logged_in_customer')) : ?>
+                <a href="<?= base_url('CustomerPanel') ?>" class="dropdown-item text-white">Customer Panel</a>
+                <a href="<?= base_url('CustomerAuth/Logoff') ?>" class="dropdown-item text-white">Logout</a>
+              <?php else : ?>
+                <a href="<?= base_url('CustomerAuth') ?>" class="dropdown-item text-white">Login</a>
+                <a href="<?= base_url('CustomerAuth/Register') ?>" class="dropdown-item text-white">Register</a>
+              <?php endif ?>
             </div>
           </div>
         </div>
@@ -29,9 +35,9 @@
 <!-- Nav Bar End -->
 
 <style>
-a.dropdown-item:hover {
-  background-color: #0f7dc5;
-}
+  a.dropdown-item:hover {
+    background-color: #0f7dc5;
+  }
 </style>
 
 <!-- Bottom Bar Start -->
