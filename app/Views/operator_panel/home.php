@@ -32,7 +32,7 @@
           <!-- /.card-body -->
         </div>
       </div>
-      <button class="btn btn-primary" data-mdb-ripple-init data-mdb-toggle="modal" data-mdb-target="#modalPassword"><i class="fa fa-pencil"></i> Ubah Password</button>
+      <button class="btn btn-primary" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#modalPassword"><i class="fa fa-pencil"></i> Ubah Password</button>
       <div class="card card-primary my-3">
         <div class="card-header bg-primary">
           <h3 class="card-title text-light">Informasi Toko</h3>

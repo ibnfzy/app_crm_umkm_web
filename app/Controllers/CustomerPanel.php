@@ -14,12 +14,22 @@ class CustomerPanel extends BaseController
     {
         $this->db = db_connect();
         $this->cart = \Config\Services::cart();
+        session()->set('dataCustomer', $this->db->table('customer')->join('ongkir', 'ongkir.id_ongkir = customer.id_ongkir')->where('customer.id_customer', session()->get('id_customer'))->get()->getRowArray());
     }
 
     public function index()
     {
+        $kota_tersedia = $this->db->table('ongkir')->get()->getResultArray();
+
+        $arrKota = [];
+
+        foreach ($kota_tersedia as $key => $value) {
+            $arrKota[$value['nama_kota']] = $value['tarif'];
+        }
+
         return view('customer_panel/home', [
-            'dataPembayaran' => $this->db->table('transaksi')->join('customer', 'customer.id_customer = transaksi.id_customer')->where('transaksi.status_transaksi', 'Menunggu Bukti Pembayaran')->where('transaksi.id_customer', session()->get('id_customer'))->orderBy('id_transaksi', 'DESC')->get()->getResultArray()
+            'dataPembayaran' => $this->db->table('transaksi')->join('customer', 'customer.id_customer = transaksi.id_customer')->where('transaksi.status_transaksi', 'Menunggu Bukti Pembayaran')->where('transaksi.id_customer', session()->get('id_customer'))->orderBy('id_transaksi', 'DESC')->get()->getResultArray(),
+            'kota_tersedia' => $arrKota
         ]);
     }
 
@@ -223,5 +233,66 @@ class CustomerPanel extends BaseController
         $this->getKuponBaseOnTransaksi(session()->get('id_customer'));
 
         return redirect()->to(base_url('CustomerPanel/Invoice/' . $this->request->getPost('id_transaksi')))->with('type-status', 'success')->with('message', 'Konfirmasi pesanan berhasil');
+    }
+
+    public function informasi_edit()
+    {
+        $rules = [
+            'email_customer' => [
+                'rules' => 'required|valid_email|is_unique[customer.email_customer]',
+                'errors' => [
+                    'required' => 'Email harus diisi',
+                    'valid_email' => 'Email harus benar',
+                    'is_unique' => 'Email sudah terdaftar'
+                ]
+            ],
+            'nama_customer' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama harus diisi'
+                ]
+            ],
+            'no_wa' => [
+                'rules' => 'required|max_length[13]|is_unique[customer.no_wa]|numeric',
+                'errors' => [
+                    'required' => 'No. Whatsapp harus diisi',
+                    'is_unique' => 'No. Whatsapp sudah terdaftar',
+                    'max_length' => 'No. Whatsapp Maksimal 13 karakter',
+                    'numeric' => 'No. Whatsapp harus angka'
+                ]
+            ],
+            'alamat' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Alamat harus diisi'
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->to(base_url('CustomerPanel'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+        }
+
+        $getOngkir = $this->db->table('ongkir')->where('nama_kota', $this->request->getPost('kota'))->get()->getRowArray();
+
+        $this->db->table('customer')->where('id_customer', session()->get('id_customer'))->update([
+            'email_customer' => $this->request->getPost('email_customer'),
+            'password_customer' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'nama_customer' => $this->request->getPost('nama_customer'),
+            'no_wa' => '62' . $this->request->getPost('no_wa'),
+            'id_ongkir' => $getOngkir['id_ongkir'],
+            'alamat' => $this->request->getPost('alamat')
+        ]);
+
+        return redirect()->to(base_url('CustomerPanel'))->with('type-status', 'info')->with('message', 'Berhasil merubah informasi akun');
+    }
+
+    public function password_edit()
+    {
+        $this->db->table('customer')->where('id_customer', session()->get('id_customer'))->update([
+            'password_customer' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        ]);
+
+        return redirect()->to(base_url('CustomerPanel'))->with('type-status', 'success')->with('message', 'Berhasil merubah password');
     }
 }

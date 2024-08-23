@@ -12,16 +12,13 @@
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
 
-  <!-- ChartJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-    crossorigin="anonymous"></script>
   <!-- Custom styles -->
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css'
     integrity='sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=='
     crossorigin='anonymous' />
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" href="/panel_assets/css/admin.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
   <style>
     .rating {
@@ -48,6 +45,30 @@
     .rating label:hover,
     .rating label:hover~label {
       color: #f5b301;
+    }
+
+
+    .divider:after,
+    .divider:before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+
+    .h-custom {
+      height: calc(100% - 73px);
+    }
+
+    @media (max-width: 450px) {
+      .h-custom {
+        height: 100%;
+      }
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
     }
   </style>
 </head>
@@ -82,6 +103,10 @@
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js' integrity='sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==' crossorigin='anonymous'></script>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
   <?= $this->renderSection('script'); ?>
 
@@ -130,46 +155,6 @@
       session()->getFlashdata('type-status') . '"]("' . session()->getFlashdata('message') . '")</script>';
   }
   ?>
-
-  <script>
-    // Graph
-    var ctx = document.getElementById("myChart");
-
-    var myChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ],
-        datasets: [{
-          data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-          lineTension: 0,
-          backgroundColor: "transparent",
-          borderColor: "#007bff",
-          borderWidth: 4,
-          pointBackgroundColor: "#007bff",
-        }, ],
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false,
-            },
-          }, ],
-        },
-        legend: {
-          display: false,
-        },
-      },
-    });
-  </script>
 </body>
 
 </html>

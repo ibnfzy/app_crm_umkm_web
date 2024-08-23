@@ -19,7 +19,6 @@ $routes->post('Cart/ApplyVoucher', 'Home::useKupon');
 
 $routes->post('Search', 'Home::search');
 
-
 $routes->group('OperatorLogin', function (RouteCollection $routes) {
   $routes->get('/', 'OperatorLogin::index');
   $routes->post('Auth', 'OperatorLogin::auth');
@@ -89,4 +88,6 @@ $routes->group('CustomerPanel', function (RouteCollection $routes) {
   $routes->get('Checkout', 'CustomerPanel::checkout');
   $routes->post('UploadBuktiBayar', 'CustomerPanel::upload_bukti');
   $routes->post('Konfirmasi', 'CustomerPanel::konfirmasi_pesanan');
+  $routes->post('Informasi', 'CustomerPanel::informasi_edit');
+  $routes->post('Password', 'CustomerPanel::password_edit');
 });

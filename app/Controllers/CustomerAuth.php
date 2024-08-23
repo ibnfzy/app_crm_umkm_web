@@ -95,11 +95,16 @@ class CustomerAuth extends BaseController
         return true;
     }
 
+    public function setIdUnique($id_customer)
+    {
+        $this->db->table('customer')->where('id_customer', $id_customer)->update(['id_unique_customer' => 'C' . $id_customer]);
+    }
+
     public function register_action()
     {
         $rules = [
-            'email' => [
-                'rules' => 'required|valid_email|is_unique[customer.email]',
+            'email_customer' => [
+                'rules' => 'required|valid_email|is_unique[customer.email_customer]',
                 'errors' => [
                     'required' => 'Email harus diisi',
                     'valid_email' => 'Email harus benar',
@@ -111,13 +116,6 @@ class CustomerAuth extends BaseController
                 'errors' => [
                     'required' => 'Password harus diisi',
                     'min_length' => 'Password minimal 5 karakter'
-                ]
-            ],
-            'confirm_password' => [
-                'rules' => 'required|matches[password]',
-                'errors' => [
-                    'required' => 'Konfirmasi password harus diisi',
-                    'matches' => 'Konfirmasi password tidak sama'
                 ]
             ],
             'nama_customer' => [
@@ -135,12 +133,6 @@ class CustomerAuth extends BaseController
                     'numeric' => 'No. Whatsapp harus angka'
                 ]
             ],
-            'kota' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kota harus diisi'
-                ]
-            ],
             'alamat' => [
                 'rules' => 'required',
                 'errors' => [
@@ -150,22 +142,24 @@ class CustomerAuth extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->to(base_url('CustomerLogin/Register'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
+            return redirect()->to(base_url('CustomerAuth/Register'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
         }
 
         $getOngkir = $this->db->table('ongkir')->where('nama_kota', $this->request->getPost('kota'))->get()->getRowArray();
 
         $this->db->table('customer')->insert([
-            'email' => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'email_customer' => $this->request->getPost('email_customer'),
+            'password_customer' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             'nama_customer' => $this->request->getPost('nama_customer'),
-            'no_wa' => $this->request->getPost('no_wa'),
+            'no_wa' => '62' . $this->request->getPost('no_wa'),
             'id_ongkir' => $getOngkir['id_ongkir'],
             'alamat' => $this->request->getPost('alamat')
         ]);
 
-        $this->getKuponNewCustomer($this->db->insertID());
+        $lastID = $this->db->table('customer')->orderBy('id_customer', 'DESC')->limit(1)->get()->getRowArray();
+        $this->setIdUnique($lastID['id_customer']);
+        $this->getKuponNewCustomer($lastID['id_customer']);
 
-        return redirect()->to(base_url('CustomerLogin'))->with('type-status', 'info')->with('message', 'Akun anda sudah terdaftar silahkan login');
+        return redirect()->to(base_url('CustomerAuth'))->with('type-status', 'info')->with('message', 'Akun anda sudah terdaftar silahkan login');
     }
 }

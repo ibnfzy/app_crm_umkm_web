@@ -9,13 +9,13 @@
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css'
-    integrity='sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=='
-    crossorigin='anonymous' />
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css" rel="stylesheet" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css'
+    integrity='sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=='
+    crossorigin='anonymous' />
   <style>
     .divider:after,
     .divider:before {
@@ -52,17 +52,17 @@
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
           <h1 class="my-2">Customer Registrasi</h1>
-          <form action="/CustomerAuth/Register" method="post">
-            <input type="hidden" name="lat">
+          <form action="/CustomerAuth/Register" method="post" id="form">
+            <input type="hidden" name="kota" id="kota">
             <!-- Email input -->
             <div data-mdb-input-init class="form-outline mb-4">
-              <input type="text" class="form-control form-control-lg" name="nama" id="nama" required />
-              <label class="form-label" for="nama">Nama Lengkap</label>
+              <input type="text" class="form-control form-control-lg" name="nama_customer" id="nama_customer" required />
+              <label class="form-label" for="nama_customer">Nama Lengkap</label>
             </div>
 
             <div data-mdb-input-init class="form-outline mb-4">
-              <input type="email" class="form-control form-control-lg" name="email" id="email" required />
-              <label class="form-label" for="email">Email</label>
+              <input type="email" class="form-control form-control-lg" name="email_customer" id="email_customer" required />
+              <label class="form-label" for="email_customer">Email</label>
             </div>
 
             <!-- Password input -->
@@ -71,10 +71,11 @@
               <label class="form-label" for="password">Password</label>
             </div>
 
+            <span id="message" class="text-danger"></span>
             <div data-mdb-input-init class="form-outline mb-3">
-              <input type="password" class="form-control form-control-lg" name="konfirmasi_password"
-                id="konfirmasi_password" />
-              <label class="form-label" for="konfirmasi_password">Konfirmasi Password</label>
+              <input type="password" class="form-control form-control-lg" name="confirm_password"
+                id="confirm_password" />
+              <label class="form-label" for="confirm_password">Konfirmasi Password</label>
             </div>
 
             <div class="input-group mb-3">
@@ -115,14 +116,48 @@
   </section>
 
   <!-- MDB -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js' integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==' crossorigin='anonymous'></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js'
-    integrity='sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=='
-    crossorigin='anonymous'></script>
 
   <!-- sweetalert -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js' integrity='sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==' crossorigin='anonymous'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js'
+    integrity='sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=='
+    crossorigin='anonymous'></script>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <script>
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  </script>
+
+  <?php
+  if (session()->getFlashdata('dataMessage')) {
+    foreach (session()->getFlashdata('dataMessage') as $item) {
+      echo '<script>toastr["' .
+        session()->getFlashdata('type-status') . '"]("' . $item . '")</script>';
+    }
+  }
+  if (session()->getFlashdata('message')) {
+    echo '<script>toastr["' .
+      session()->getFlashdata('type-status') . '"]("' . session()->getFlashdata('message') . '")</script>';
+  }
+  ?>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -150,7 +185,8 @@
               var address =
                 `${data.address.road}, ${data.address.city}, ${data.address.state}, ${data.address.country}, ${data.address.postcode}`;
               document.getElementById('alamat').value = address;
-              kota = data.address.city
+              kota = data.address.city;
+              document.getElementById('kota').value = kota;
 
             } else {
               document.getElementById('alamat').value = "Alamat tidak ditemukan pada map API ()";
@@ -172,6 +208,7 @@
               marker.setLatLng(latlng);
               map.setView(latlng, 13);
             }
+
           })
           .catch(error => console.error('Error:', error));
       }
@@ -242,45 +279,30 @@
       })
 
       // Event listener untuk perubahan pada input alamat
-      document.getElementById('alamat').addEventListener('change', function() {
+      document.getElementById('alamat').addEventListener('input', function() {
         var address = this.value;
         updateMap(address);
         document.getElementById('submitbtn').setAttribute('hidden', 'true');
         document.getElementById('cekKesediaan').removeAttribute('hidden');
+
       });
+
+      document.getElementById('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const password = document.getElementById('password').value
+        const password_konfirmasi = document.getElementById('confirm_password').value
+        if (password != password_konfirmasi) {
+          swal({
+            title: 'Password Tidak Sama',
+            icon: 'error',
+            button: 'OK',
+          })
+          return
+        }
+        this.submit()
+      })
     });
-
-    toastr.options = {
-      "closeButton": true,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": true,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    }
   </script>
-
-  <?php
-  if (session()->getFlashdata('dataMessage')) {
-    foreach (session()->getFlashdata('dataMessage') as $item) {
-      echo '<script>toastr["' .
-        session()->getFlashdata('type-status') . '"]("' . $item . '")</script>';
-    }
-  }
-  if (session()->getFlashdata('message')) {
-    echo '<script>toastr["' .
-      session()->getFlashdata('type-status') . '"]("' . session()->getFlashdata('message') . '")</script>';
-  }
-  ?>
 </body>
 
 </html>
