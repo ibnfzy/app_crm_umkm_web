@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\CustomTcpdf;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class CustomerPanel extends BaseController
@@ -104,7 +105,7 @@ class CustomerPanel extends BaseController
 
             if ($getProduk['stok'] < $value['qty']) {
                 return redirect()->to(base_url('Cart'))->with('type-status', 'error')
-                ->with('message', 'Terdapat Stok kurang pada keranjang anda, silahkan ditambahkan ulang');
+                    ->with('message', 'Terdapat Stok kurang pada keranjang anda, silahkan ditambahkan ulang');
             }
 
             $cart[] = $getProduk;
@@ -135,9 +136,9 @@ class CustomerPanel extends BaseController
             'total_kuantitas_belanja' => array_sum($qtyArr),
             'total_bayar_belanja' => $grandTotal,
             'batas_pembayaran' => date('Y-m-d', strtotime('+1 day')),
-            'id_kupon' => $idCustomerKupon,
-            'diskon' => $kupon,
-            'max_potongan' => $maxPotonganKupon,
+            'id_kupon' => $idCustomerKupon ?? 0,
+            'diskon' => $kupon ?? 0,
+            'max_potongan' => $maxPotonganKupon ?? 0,
         ]);
 
 
@@ -166,7 +167,7 @@ class CustomerPanel extends BaseController
         session()->set('max_nominal_kupon', null);
 
         return redirect()->to(base_url('CustomerPanel/Invoice/' . $idTransaksi))->with('type-status', 'success')
-        ->with('message', 'Checkout berhasil, silahkan lakukan pembayaran');
+            ->with('message', 'Checkout berhasil, silahkan lakukan pembayaran');
     }
 
     public function upload_bukti()
@@ -216,7 +217,7 @@ class CustomerPanel extends BaseController
         if ($GetLevel) {
             $getRandomKupon = $this->db->table('kupon')->where('level_kupon', $GetLevel)->orderBy('id_kupon', 'DESC')->get()->getRowArray();
 
-           return $this->db->table('customer_kupon')->insert([
+            return $this->db->table('customer_kupon')->insert([
                 'id_customer' => $id_customer,
                 'id_kupon' => $getRandomKupon['id_kupon'],
                 'expired_at' => date('Y-m-d', strtotime('+1 month')),
@@ -294,5 +295,63 @@ class CustomerPanel extends BaseController
         ]);
 
         return redirect()->to(base_url('CustomerPanel'))->with('type-status', 'success')->with('message', 'Berhasil merubah password');
+    }
+
+    public function kupon()
+    {
+        return view('customer_panel/kupon', [
+            'data' => $this->db->table('customer_kupon')->join('kupon', 'kupon.id_kupon = customer_kupon.id_kupon')->where('customer_kupon.id_customer', session()->get('id_customer'))->get()->getResultArray()
+        ]);
+    }
+
+    public function print_invoice($id_transaksi)
+    {
+        $dataTransaksi = $this->db->table('transaksi')->where('id_transaksi', $id_transaksi)->get()->getRowArray();
+        $dataDetail = $this->db->table('transaksi_detail')->join('produk', 'produk.id_produk = transaksi_detail.id_produk')->where('id_transaksi', $id_transaksi)->get()->getResultArray();
+        $dataToko = $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray();
+        $dataCustomer = $this->db->table('customer')->join('ongkir', 'ongkir.id_ongkir = customer.id_ongkir')->where('customer.id_customer', $dataTransaksi['id_customer'])->get()->getRowArray();
+
+        $img_path = ROOTPATH . 'public/logo.png';
+        $type = pathinfo($img_path, PATHINFO_EXTENSION);
+        $data = file_get_contents($img_path);
+        $img = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $pdf = new CustomTcpdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        // Set informasi dokumen
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Admin Bunga Desa');
+        $pdf->SetTitle('Laporan Produk');
+        $pdf->SetSubject("Invoice Transaksi");
+        $pdf->SetKeywords('Laporan, Produk');
+
+        // Set header dan footer
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        // Set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(false);
+        $pdf->SetFooterMargin(false);
+
+        // Tambahkan halaman
+        $pdf->AddPage();
+
+        // Set font
+        $pdf->SetFont('helvetica', '', 12);
+
+        $html = view('customer_panel/print_invoice', [
+            'dataTransaksi' => $dataTransaksi,
+            'dataDetail' => $dataDetail,
+            'dataToko' => $dataToko,
+            'dataCustomer' => $dataCustomer,
+            'img' => $img
+        ]);
+
+        // Tulis HTML ke PDF
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // Output PDF (D = download)
+        return $pdf->Output('laporan_produk.pdf', 'D');
     }
 }

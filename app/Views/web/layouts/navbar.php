@@ -12,6 +12,8 @@
         <div class="navbar-nav mr-auto">
           <a href="<?= base_url() ?>" class="nav-item nav-link">Home</a>
           <a href="<?= base_url('Katalog') ?>" class="nav-item nav-link">Katalog Produk</a>
+          <a href="<?= base_url('Informasi') ?>" class="nav-item nav-link">Informasi Toko</a>
+          <a href="<?= base_url('Testimoni') ?>" class="nav-item nav-link">Testimoni</a>
           <a href="<?= base_url('OperatorPanel') ?>" class="nav-item nav-link">Login Operator</a>
         </div>
         <div class="navbar-nav ml-auto px-5">
@@ -47,7 +49,8 @@
       <div class="col-md-3">
         <div class="logo">
           <a href="<?= base_url() ?>">
-            <h5 class="font-weight-bold text-lg-center"> <?= strtoupper(session()->get('dataToko')['nama_toko']); ?></h5>
+            <h5 class="font-weight-bold text-lg-center"> <?= strtoupper(session()->get('dataToko')['nama_toko']); ?>
+            </h5>
           </a>
         </div>
       </div>

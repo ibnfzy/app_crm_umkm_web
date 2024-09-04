@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\CustomTcpdf;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class OperatorPanel extends BaseController
@@ -653,7 +654,7 @@ class OperatorPanel extends BaseController
         ]);
 
         $this->db->table('operator')->where('id_operator', $this->request->getPost('id_operator'))->update([
-            'username' => $this->request->getPost('username') 
+            'username' => $this->request->getPost('username')
         ]);
 
         return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'success')->with('message', 'Informasi diedit');
@@ -666,5 +667,112 @@ class OperatorPanel extends BaseController
         ]);
 
         return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'success')->with('message', 'Password diedit');
+    }
+
+    public function get_pdf_laporan_produk($id_produk)
+    {
+        $getTransaksi = $this->db->table('transaksi_detail')->join('transaksi', 'transaksi_detail.id_transaksi = transaksi.id_transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('id_produk', $id_produk)->get()->getResultArray();
+        $getProduk = $this->db->table('produk')->where('id_produk', $id_produk)->get()->getRowArray();
+        $informasiToko = $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray();
+
+        $img_path = ROOTPATH . 'public/logo.png';
+        $type = pathinfo($img_path, PATHINFO_EXTENSION);
+        $data = file_get_contents($img_path);
+        $img = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $pdf = new CustomTcpdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        // Set informasi dokumen
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Admin Bunga Desa');
+        $pdf->SetTitle('Laporan Produk');
+        $pdf->SetSubject("Laporan Produk {$getProduk['nama_produk']}");
+        $pdf->SetKeywords('Laporan, Produk');
+
+        // Set header dan footer
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        // Set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(false);
+        $pdf->SetFooterMargin(false);
+
+        // Tambahkan halaman
+        $pdf->AddPage();
+
+        // Set font
+        $pdf->SetFont('helvetica', '', 12);
+
+        // Ambil view untuk template PDF
+        $html = view('operator_panel/laporan_produk', [
+            'data' => $getTransaksi,
+            'getProduk' => $getProduk,
+            'img' => $img,
+            'informasiToko' => $informasiToko
+        ]);
+
+        // Tulis HTML ke PDF
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // Output PDF (D = download)
+        return $pdf->Output('laporan_produk.pdf', 'D');
+    }
+
+    public function laporan_bulanan()
+    {
+        $getTransaksiDetail = $this->db->table('transaksi_detail')->join('transaksi', 'transaksi_detail.id_transaksi = transaksi.id_transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('transaksi.status_transaksi', 'Transaksi Berhasil')->where('MONTH(transaksi.tanggal_checkout)', date('m/Y', strtotime($this->request->getPost('bulan'))))->get()->getResultArray();
+
+        $informasiToko = $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray();
+
+        $img_path = ROOTPATH . 'public/logo.png';
+        $type = pathinfo($img_path, PATHINFO_EXTENSION);
+        $data = file_get_contents($img_path);
+        $img = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $pdf = new CustomTcpdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        // Set informasi dokumen
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Admin Bunga Desa');
+        $pdf->SetTitle('Laporan Produk');
+        $pdf->SetSubject("Laporan Transaksi Bulanan");
+        $pdf->SetKeywords('Laporan, Produk');
+
+        // Set header dan footer
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        // Set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(false);
+        $pdf->SetFooterMargin(false);
+
+        // Tambahkan halaman
+        $pdf->AddPage();
+
+        // Set font
+        $pdf->SetFont('helvetica', '', 12);
+
+        $html = view('operator_panel/laporan_transaksi_bulanan', [
+            'data' => $getTransaksiDetail,
+            'img' => $img,
+            'informasiToko' => $informasiToko
+        ]);
+
+        // Tulis HTML ke PDF
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // Output PDF (D = download)
+        return $pdf->Output('laporan_transaksi_bulanan.pdf', 'D');
+    }
+
+    public function pelanggann_detail($id)
+    {
+        return view('operator_panel/pelanggan_detail', [
+            'dataTransaksiCount' => $this->db->table('transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('customer.id_unique_customer', $id)->countAllResults(),
+            'dataTransaksi' => $this->db->table('transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('customer.id_unique_customer', $id)->get()->getResultArray(),
+            'dataKupon' => $this->db->table('customer_kupon')->where('id_customer', $id)->get()->getResultArray()
+        ]);
     }
 }

@@ -33,7 +33,7 @@
 
   <!--Main layout-->
   <main style="margin-top: 58px">
-    <div class="container pt-4">
+    <div class="container-fluid pt-4">
       <?= $this->renderSection('content'); ?>
     </div>
   </main>
@@ -75,6 +75,13 @@
     });
 
     new DataTable('#datatables', {
+      responsive: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json'
+      }
+    });
+
+    new DataTable('.datatable', {
       responsive: true,
       language: {
         url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json'

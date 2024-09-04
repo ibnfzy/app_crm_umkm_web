@@ -16,7 +16,8 @@ class Home extends BaseController
     public function index(): string
     {
         return view('web/home', [
-            'dataProduk' => $this->db->table('produk')->orderBy('id_produk', 'RANDOM')->get(10)->getResultArray()
+            'dataProduk' => $this->db->table('produk')->orderBy('id_produk', 'RANDOM')->get(10)->getResultArray(),
+            'dataSlider' => $this->db->table('slider')->get()->getResultArray()
         ]);
     }
 
@@ -127,11 +128,11 @@ class Home extends BaseController
 
         if ($status == false) {
             return redirect()->to(base_url('Cart'))->with('type-status', 'error')
-            ->with('message', 'Kuantitas barang melebihi stok');
+                ->with('message', 'Kuantitas barang melebihi stok');
         }
 
         return redirect()->to(base_url('Cart'))->with('type-status', 'success')
-        ->with('message', 'Berhasil diperbaruhi');
+            ->with('message', 'Berhasil diperbaruhi');
     }
 
     public function review_star($id)
@@ -179,7 +180,7 @@ class Home extends BaseController
                       <i class="fa fa-star text-warning"></i>
                       <i class="fa fa-star text-warning"></i>
                       <i class="fa fa-star text-warning"></i>';
-        } 
+        }
 
         return $star;
     }
@@ -217,5 +218,21 @@ class Home extends BaseController
         session()->set('max_nominal_kupon', $getCustomerKupon['max_nominal_kupon']);
 
         return redirect()->to(base_url('Cart'))->with('type-status', 'success')->with('message', 'Kupon Berhasil Digunakan');
+    }
+
+    public function informasi()
+    {
+        return view('web/informasi', [
+            'dataRekom' => $this->db->table('produk')->orderBy('id_produk', 'RANDOM')->get(10)->getResultArray(),
+            'data' => $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray()
+        ]);
+    }
+
+    public function testimoni()
+    {
+        return view('web/testimoni', [
+            'dataRekom' => $this->db->table('produk')->orderBy('id_produk', 'RANDOM')->get(10)->getResultArray(),
+            'data' => $this->db->table('produk_detail_review')->join('customer', 'customer.id_customer = produk_detail_review.id_customer')->join('produk', 'produk.id_produk = produk_detail_review.id_produk')->get()->getResultArray()
+        ]);
     }
 }

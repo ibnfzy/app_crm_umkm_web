@@ -34,6 +34,11 @@ class CustomerAuth extends BaseController
         ]);
     }
 
+    public function checkAndDeleteExpiredKuponCustomer($id_customer)
+    {
+        return $this->db->table('customer_kupon')->where('expired_at <', date('Y-m-d'))->where('id_customer', $id_customer)->delete();
+    }
+
     public function auth()
     {
         $session = session();
@@ -61,14 +66,16 @@ class CustomerAuth extends BaseController
                 $session->set($sessionData);
                 // $session->markAsTempdata('logged_in_customer', 1800); //timeout 30 menit
 
+                $this->checkAndDeleteExpiredKuponCustomer($data['id_customer']);
+
                 return redirect()->to(base_url('CustomerPanel'))->with('type-status', 'info')
                     ->with('message', 'Selamat Datang Kembali ' . $sessionData['nama_customer']);
             } else {
-                return redirect()->to(base_url('CustomerLogin'))->with('type-status', 'error')
+                return redirect()->to(base_url('CustomerAuth'))->with('type-status', 'error')
                     ->with('message', 'Password tidak benar');
             }
         } else {
-            return redirect()->to(base_url('CustomerLogin'))->with('type-status', 'error')
+            return redirect()->to(base_url('CustomerAuth'))->with('type-status', 'error')
                 ->with('message', 'Email tidak benar');
         }
     }
@@ -82,13 +89,13 @@ class CustomerAuth extends BaseController
 
     public function getKuponNewCustomer($id_customer)
     {
-        $getRandomKupon = $this->db->table('kupon')->where('level_kupon', '0')->orderBy('id_kupon', 'RANDOM')->get(2)->getResultArray();
+        $getRandomKupon = $this->db->table('kupon')->where('level_kupon', 0)->orderBy('id_kupon', 'RANDOM')->get(2)->getResultArray();
 
         foreach ($getRandomKupon as $key => $value) {
             $this->db->table('customer_kupon')->insert([
                 'id_customer' => $id_customer,
                 'id_kupon' => $value['id_kupon'],
-                'expired_at' => date('Y-m-d', strtotime('+5 month')),
+                'expired_at' => date('Y-m-d', strtotime('+1 month')),
             ]);
         }
 

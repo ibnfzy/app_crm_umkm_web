@@ -31,7 +31,40 @@
         <i class="fa-solid fa-images fa-fw me-3"></i>
         <span>Slider</span>
       </a>
+      <a href="#" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init="" data-mdb-modal-init
+        data-mdb-target="#laporan">
+        <i class="fa-regular fa-file-pdf fa-fw me-3"></i>
+        <span>Laporan Transaksi (Bulanan)</span>
+      </a>
     </div>
   </div>
 </nav>
 <!-- Sidebar -->
+
+<!-- Modal -->
+<div class="modal fade" id="laporan" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="tambahLabel">Laporan Bulanan</h5>
+        <button type="button" class="btn-close bg-white" data-mdb-ripple-init data-mdb-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <form action="/OperatorPanel/Laporan/Bulanan" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="modal-body">
+
+          <div class="form-outline mb-4" data-mdb-input-init>
+            <input type="month" id="bulan" class="form-control" name="bulan" required>
+            <label for="bulan" class="form-label">Pilih Bulan</label>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-ripple-init data-mdb-dismiss="modal">Keluar</button>
+          <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Proses</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

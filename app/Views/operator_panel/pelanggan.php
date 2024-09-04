@@ -13,20 +13,22 @@
             <th>Nama</th>
             <th>Email</th>
             <th>Total Transaksi</th>
-            <th>Aksi</th>
+            <th>Detail</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ((array) $data as $key => $item) : ?>
-          <tr>
-            <td><?= $key + 1 ?></td>
-            <td><?= $item['id_unique_customer'] ?></td>
-            <td><?= $item['nama_customer'] ?></td>
-            <td><?= $item['email_customer'] ?></td>
-            <td><?= $item['total_transaksi'] ?? 0 ?></td>
-            <td>
-              <a href="<?= base_url('pelanggan/' . $item['id_customer']) ?>" class="btn btn-info btn-sm">Detail</a>
-          </tr>
+            <tr>
+              <td><?= $key + 1 ?></td>
+              <td><?= $item['id_unique_customer'] ?></td>
+              <td><?= $item['nama_customer'] ?></td>
+              <td><?= $item['email_customer'] ?></td>
+              <td><?= $item['total_transaksi'] ?? 0 ?></td>
+              <td>
+                <a href="/OperatorPanel/Pelanggan/<?= $item['id_unique_customer'] ?>"
+                  class="btn btn-primary btn-sm">Detail</a>
+              </td>
+            </tr>
           <?php endforeach ?>
         </tbody>
       </table>

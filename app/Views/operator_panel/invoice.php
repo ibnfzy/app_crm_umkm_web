@@ -9,24 +9,28 @@ $hargaArr = [];
 
 <section class="my-4">
   <button class="btn btn-primary my-2" onclick="window.location='/OperatorPanel/Transaksi'">Kembali</button>
+  <a href="/OperatorPanel/Invoice/Laporan/<?= $data_transaksi['id_transaksi'] ?>" target="_blank"
+    class="btn btn-danger float-end no-print" data-mdb-ripple-init data-mdb-ripple-color="light">Download
+    Invoice PDF</a>
   <div class="card" id="invoice">
     <div class="card-body">
       <div class="container mb-5 mt-3">
         <div class="row d-flex align-items-baseline mb-5">
           <div class="col-xl-9">
             <h3>Detail Transaksi / Invoice</h3>
-            <p style="color: #7e8d9f;font-size: 20px;">Invoice <strong>ID: #<?= $data_transaksi['id_unique_transaksi'] ?></strong></p>
+            <p style="color: #7e8d9f;font-size: 20px;">Invoice <strong>ID:
+                #<?= $data_transaksi['id_unique_transaksi'] ?></strong></p>
             <!-- <h4>Bunga Desa</h4> -->
           </div>
           <div class="col-xl-3">
-            <button class="btn btn-secondary float-end no-print" data-mdb-ripple-init data-mdb-ripple-color="light" onclick="printDiv('invoice')">Print</button>
           </div>
         </div>
         <div class="container">
           <div class="row">
             <div class="col-xl-8">
               <ul class="list-unstyled">
-                <li class="text-muted">Kepada: <span style="color:#8f8061 ;"><?= $data_customer['nama_customer']; ?></span></li>
+                <li class="text-muted">Kepada: <span
+                    style="color:#8f8061 ;"><?= $data_customer['nama_customer']; ?></span></li>
                 <li class="text-muted"><?= $data_customer['alamat']; ?></li>
                 <li class="text-muted"><?= $data_customer['nama_kota']; ?></li>
                 <li class="text-muted"><i class="fas fa-phone"></i>
@@ -61,8 +65,7 @@ $hargaArr = [];
                         overflow-hidden
                         d-block
                         " data-ripple-color="light">
-                  <img src="/uploads/<?= $gambarProduk['file'] ?>"
-                    class="w-100" height="100px" alt="#" />
+                  <img src="/uploads/<?= $gambarProduk['file'] ?>" class="w-100" height="100px" alt="#" />
                   <a href="#!">
                     <div class="hover-overlay">
                       <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>
@@ -74,7 +77,8 @@ $hargaArr = [];
                 <p class="fw-bold"><?= $item['nama_produk']; ?></p>
                 <p class="mb-1">
                   <span class="text-muted me-2">Kuantitas:</span><span><?= $item['kuantitas']; ?></span> <br>
-                  <span class="text-muted me-2">Harga Produk:</span><span>Rp <?= number_format($item['harga_produk_beli'], 0, ',', '.') ?></span>
+                  <span class="text-muted me-2">Harga Produk:</span><span>Rp
+                    <?= number_format($item['harga_produk_beli'], 0, ',', '.') ?></span>
                 </p>
               </div>
               <div class="col-md-3 mb-4 mb-md-0">
@@ -102,22 +106,29 @@ $hargaArr = [];
             ?>
             <div class="col-xl-3">
               <ul class="list-unstyled">
-                <li class="text-muted ms-3"><span class="text-black me-4">Diskon</span><?= $data_transaksi['diskon']; ?>%</li>
-                <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>Rp <?= number_format(array_sum($hargaArr), 0, ',', '.'); ?></li>
-                <li class="text-muted ms-3"><span class="text-black me-4">Potongan</span>Rp <?= number_format($potongan, 0, ',', '.'); ?></li>
-                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Ongkos Kirim</span>Rp <?= number_format($data_customer['tarif'], 0, ',', '.'); ?></li>
+                <li class="text-muted ms-3"><span
+                    class="text-black me-4">Diskon</span><?= $data_transaksi['diskon']; ?>%</li>
+                <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>Rp
+                  <?= number_format(array_sum($hargaArr), 0, ',', '.'); ?></li>
+                <li class="text-muted ms-3"><span class="text-black me-4">Potongan</span>Rp
+                  <?= number_format($potongan, 0, ',', '.'); ?></li>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Ongkos Kirim</span>Rp
+                  <?= number_format($data_customer['tarif'], 0, ',', '.'); ?></li>
               </ul>
               <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                  style="font-size: 25px;">Rp <?= number_format($data_transaksi['total_bayar_belanja'], 0, ',', '.'); ?></span></p>
+                  style="font-size: 25px;">Rp
+                  <?= number_format($data_transaksi['total_bayar_belanja'], 0, ',', '.'); ?></span></p>
             </div>
           </div>
           <div class="col-12">
             <?php if ($data_transaksi['status_transaksi'] == 'Menunggu validasi bukti pembayaran') : ?>
-              <button type="button" class="btn btn-primary btn-lg btn-block no-print" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#uploadBukti">Lihat Bukti Pembayaran</button>
+              <button type="button" class="btn btn-primary btn-lg btn-block no-print" data-mdb-ripple-init
+                data-mdb-modal-init data-mdb-target="#uploadBukti">Lihat Bukti Pembayaran</button>
             <?php endif ?>
 
             <?php if ($data_transaksi['status_transaksi'] == 'Pembayaran diterima, menunggu pesanan diproses') : ?>
-              <button type="button" class="btn btn-primary btn-lg btn-block no-print" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#proses_pesanan">Proses pesanan</button>
+              <button type="button" class="btn btn-primary btn-lg btn-block no-print" data-mdb-ripple-init
+                data-mdb-modal-init data-mdb-target="#proses_pesanan">Proses pesanan</button>
             <?php endif ?>
           </div>
         </div>

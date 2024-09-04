@@ -11,6 +11,10 @@
         <i class="fa-solid fa-cart-shopping fa-fw me-3"></i>
         <span>Orderan </span>
       </a>
+      <a href="/CustomerPanel/Kupon" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
+        <i class="fa-solid fa-tags fa-fw me-3"></i>
+        <span>Kupon </span>
+      </a>
       <a href="/CustomerPanel/Review" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
         <i class="fa-solid fa-comment-dots fa-fw me-3"></i>
         <span>Review</span></a>

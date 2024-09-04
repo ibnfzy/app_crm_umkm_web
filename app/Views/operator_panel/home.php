@@ -14,7 +14,11 @@
               <?= strtoupper(session()->get('dataToko')['nama_toko']); ?>
             </h3>
 
-            <p class="text-muted text-center"><i class="fa fa-pencil"></i> Edit</p>
+            <p class="text-muted text-center">
+              <a href="" data-mdb-modal-init data-mdb-ripple-init data-mdb-target="#ubahInformasi">
+                <i class="fa fa-pencil"></i> Edit
+              </a>
+            </p>
 
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
@@ -32,7 +36,8 @@
           <!-- /.card-body -->
         </div>
       </div>
-      <button class="btn btn-primary" data-mdb-ripple-init data-mdb-modal-init data-mdb-target="#modalPassword"><i class="fa fa-pencil"></i> Ubah Password</button>
+      <button class="btn btn-primary mt-3 col-12" data-mdb-ripple-init data-mdb-modal-init
+        data-mdb-target="#modalPassword"><i class="fa fa-pencil"></i> Ubah Password</button>
       <div class="card card-primary my-3">
         <div class="card-header bg-primary">
           <h3 class="card-title text-light">Informasi Toko</h3>
@@ -70,17 +75,24 @@
             </thead>
             <tbody>
               <?php foreach ($dataTransaksiValidasi as $key => $item) : ?>
-                <tr>
-                  <td><?= $key + 1; ?></td>
-                  <td><?= $item['id_unique_transaksi']; ?></td>
-                  <td><?= $item['nama_customer']; ?></td>
-                  <td><?= $item['total_kuantitas_belanja']; ?></td>
-                  <td>Rp <?= number_format($item['total_bayar_belanja'], 0, ',', '.'); ?></td>
-                  <td><?= $item['tanggal_checkout']; ?></td>
-                  <td><?= $item['status_transaksi']; ?></td>
-                  <td><a href="/CustomerPanel/Invoice/<?= $item['id_transaksi']; ?>" class="btn btn-sm btn-primary">Invoice</td>
-                  <td><button class="btn btn-primary" onclick="validasi('<?= $item['id_unique_transaksi'] ?>', '<?= $item['bukti_bayar'] ?>')">Validasi</button></td>
-                </tr>
+              <tr>
+                <td><?= $key + 1; ?></td>
+                <td><?= $item['id_unique_transaksi']; ?></td>
+                <td><?= $item['nama_customer']; ?></td>
+                <td><?= $item['total_kuantitas_belanja']; ?></td>
+                <td>Rp <?= number_format($item['total_bayar_belanja'], 0, ',', '.'); ?></td>
+                <td><?= $item['tanggal_checkout']; ?></td>
+                <td><?= $item['status_transaksi']; ?></td>
+                <td>
+                  <a href="https://wa.me/<?= $item['no_wa'] ?>" class="btn btn-success btn-sm" target="_blank"><i
+                      class="fa fa-phone"></i></a>
+                </td>
+                <td><a href="/OperatorPanel/Invoice/<?= $item['id_transaksi']; ?>"
+                    class="btn btn-sm btn-primary">Invoice</td>
+                <td><button class="btn btn-primary"
+                    onclick="validasi('<?= $item['id_transaksi'] ?>', '<?= $item['bukti_bayar'] ?>')">Validasi</button>
+                </td>
+              </tr>
               <?php endforeach ?>
             </tbody>
           </table>
@@ -133,37 +145,37 @@
         <div class="modal-body">
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <input type="text" id="username" class="form-control" name="username" value="<?= session()->get('username') ?>" required>
+            <input type="text" id="username" class="form-control" name="username"
+              value="<?= session()->get('username') ?>" required>
             <label for="username" class="form-label">Username Login</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <input type="text" id="nama_toko" class="form-control" name="nama_toko" value="<?= session()->get('dataToko')['nama_toko'] ?>" required>
+            <input type="text" id="nama_toko" class="form-control" name="nama_toko"
+              value="<?= session()->get('dataToko')['nama_toko'] ?>" required>
             <label for="nama_toko" class="form-label">Nama Toko</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <input type="text" id="kontak_wa" class="form-control" name="kontak_wa" value="<?= session()->get('dataToko')['kontak_wa'] ?>" required>
+            <input type="text" id="kontak_wa" class="form-control" name="kontak_wa"
+              value="<?= session()->get('dataToko')['kontak_wa'] ?>" required>
             <label for="kontak_wa" class="form-label">Kontak Whatsapp</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <textarea name="alamat" id="alamat" class="form-control" required>
-              <?= session()->get('dataToko')['alamat'] ?>
+            <textarea name="alamat" id="alamat" class="form-control" required><?= session()->get('dataToko')['alamat'] ?>
             </textarea>
             <label for="alamat" class="form-label">Alamat</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <textarea name="rekening_toko" id="rekening_toko" class="form-control" required>
-              <?= session()->get('dataToko')['rekening_toko'] ?>
+            <textarea name="rekening_toko" id="rekening_toko" class="form-control" required><?= session()->get('dataToko')['rekening_toko'] ?>
             </textarea>
             <label for="rekening_toko" class="form-label">Rekening Toko</label>
           </div>
 
           <div class="form-outline mb-4" data-mdb-input-init>
-            <textarea name="tentang" id="tentang" class="form-control" required>
-              <?= session()->get('dataToko')['tentang'] ?>
+            <textarea name="tentang" id="tentang" class="form-control" required><?= session()->get('dataToko')['tentang'] ?>
             </textarea>
             <label for="tentang" class="form-label">Tentang</label>
           </div>
@@ -218,22 +230,22 @@
 <?= $this->section('script'); ?>
 
 <script>
-  function openModal(id_transaksi, file) {
-    const modal = new mdb.Modal(document.getElementById('uploadBukti'));
-    document.getElementById('id_transaksi').value = id_transaksi;
-    document.getElementById('bukti_bayar').src = '/uploads/' + file;
-    document.getElementById('bukti_bayar-fancybox').href = '/uploads/' + file;
-    modal.show();
-  }
+function validasi(id_transaksi, file) {
+  const modal = new mdb.Modal(document.getElementById('uploadBukti'));
+  document.getElementById('id_transaksi').value = id_transaksi;
+  document.getElementById('bukti_bayar').src = '/uploads/' + file;
+  document.getElementById('bukti_bayar-fancybox').href = '/uploads/' + file;
+  modal.show();
+}
 
-  $('#formPassword').submit(function(e) {
-    e.preventDefault();
-    if ($('#password').val() != $('#password_konfirmasi').val()) {
-      $('#password-error').text('Password tidak sama');
-      return;
-    }
-    $('#formPassword').unbind('submit').submit();
-  });
+$('#formPassword').submit(function(e) {
+  e.preventDefault();
+  if ($('#password').val() != $('#password_konfirmasi').val()) {
+    $('#password-error').text('Password tidak sama');
+    return;
+  }
+  $('#formPassword').unbind('submit').submit();
+});
 </script>
 
 <?= $this->endSection(); ?>

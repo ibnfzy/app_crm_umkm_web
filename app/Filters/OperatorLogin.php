@@ -25,9 +25,9 @@ class OperatorLogin implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (session()->get('logged_in_operator')) {
-            return redirect()->to(base_url('OperatorPanel'));
-        }
+        // if (session()->get('logged_in_operator')) {
+        //     return redirect()->to(base_url('OperatorPanel'));
+        // }
     }
 
     /**

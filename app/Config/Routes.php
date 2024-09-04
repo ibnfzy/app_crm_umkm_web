@@ -19,6 +19,9 @@ $routes->post('Cart/ApplyVoucher', 'Home::useKupon');
 
 $routes->post('Search', 'Home::search');
 
+$routes->get('Informasi', 'Home::informasi');
+$routes->get('Testimoni', 'Home::testimoni');
+
 $routes->group('OperatorLogin', function (RouteCollection $routes) {
   $routes->get('/', 'OperatorLogin::index');
   $routes->post('Auth', 'OperatorLogin::auth');
@@ -49,13 +52,21 @@ $routes->group('OperatorPanel', function (RouteCollection $routes) {
   $routes->get('manage_images/(:num)', 'OperatorPanel::produk_get_images/$1');
   $routes->get('delete_image/(:num)', 'OperatorPanel::produk_delete_single_image/$1');
   $routes->post('upload_images', 'OperatorPanel::produk_add_images');
+  $routes->get('Produk/Laporan/(:num)', 'OperatorPanel::get_pdf_laporan_produk/$1');
 
   $routes->get('Pelanggan', 'OperatorPanel::pelanggan');
+  $routes->get('Pelanggan/(:segment)', 'OperatorPanel::pelanggann_detail/$1');
   $routes->get('Kupon', 'OperatorPanel::kupon');
   $routes->post('Kupon', 'OperatorPanel::kupon_add');
   $routes->post('Kupon/edit', 'OperatorPanel::kupon_edit');
   $routes->get('Kupon/(:num)', 'OperatorPanel::kupon_delete/$1');
 
+  $routes->post('Laporan/Bulanan', 'OperatorPanel::laporan_bulanan');
+
+  $routes->get(
+    'Invoice/Laporan/(:num)',
+    'CustomerPanel::print_invoice/$1'
+  );
   $routes->get('Transaksi', 'OperatorPanel::transaksi');
   $routes->get('Invoice/(:num)', 'OperatorPanel::invoice/$1');
   $routes->post('Validasi', 'OperatorPanel::validasi');
@@ -84,10 +95,13 @@ $routes->group('CustomerPanel', function (RouteCollection $routes) {
   $routes->post('Review', 'CustomerPanel::review_add');
   $routes->get('Review/(:num)', 'CustomerPanel::review_delete/$1');
 
+  $routes->get('Invoice/Laporan/(:num)', 'CustomerPanel::print_invoice/$1');
   $routes->get('Invoice/(:num)', 'CustomerPanel::invoice/$1');
   $routes->get('Checkout', 'CustomerPanel::checkout');
   $routes->post('UploadBuktiBayar', 'CustomerPanel::upload_bukti');
   $routes->post('Konfirmasi', 'CustomerPanel::konfirmasi_pesanan');
   $routes->post('Informasi', 'CustomerPanel::informasi_edit');
   $routes->post('Password', 'CustomerPanel::password_edit');
+
+  $routes->get('Kupon', 'CustomerPanel::kupon');
 });
