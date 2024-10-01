@@ -25,14 +25,14 @@ $pbagi = count($review);
                 <div class="product-slider-single normal-slider">
 
                   <?php foreach ((array) $dataImg as $item) : ?>
-                    <img src="/Uploads/<?= $item['file'] ?>" alt="Product Image">
+                  <img src="/uploads/<?= $item['file'] ?>" alt="Product Image">
                   <?php endforeach ?>
 
                 </div>
                 <div class="product-slider-single-nav normal-slider">
 
                   <?php foreach ((array) $dataImg as $item) : ?>
-                    <div class="slider-nav-img"><img src="/Uploads/<?= $item['file'] ?>" alt="Product Image"></div>
+                  <div class="slider-nav-img"><img src="/uploads/<?= $item['file'] ?>" alt="Product Image"></div>
                   <?php endforeach ?>
 
                 </div>
@@ -73,7 +73,8 @@ $pbagi = count($review);
                     </div>
 
                     <div class="action">
-                      <button type="submit" class="btn"><i class="fa fa-shopping-cart px-2"></i>Tambah Ke keranjang</button>
+                      <button type="submit" class="btn"><i class="fa fa-shopping-cart px-2"></i>Tambah Ke
+                        keranjang</button>
                     </div>
                   </div>
                 </div>
@@ -86,10 +87,12 @@ $pbagi = count($review);
           <div class="col-lg-12">
             <ul class="nav nav-pills nav-justified">
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#description" style="color: white !important;">Deskripsi Produk</a>
+                <a class="nav-link active" data-toggle="pill" href="#description"
+                  style="color: white !important;">Deskripsi Produk</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#reviews" style="color: white !important;">Reviews ( <?= $total_star; ?> )
+                <a class="nav-link" data-toggle="pill" href="#reviews" style="color: white !important;">Reviews (
+                  <?= $total_star; ?> )
                 </a>
               </li>
             </ul>
@@ -104,28 +107,28 @@ $pbagi = count($review);
               <div id="reviews" class="container tab-pane fade">
 
                 <?php if ($review == null) : ?>
-                  <div class="reviews-submitted">
-                    <p>Review Kosong</p>
-                  </div>
+                <div class="reviews-submitted">
+                  <p>Review Kosong</p>
+                </div>
                 <?php endif ?>
 
                 <?php foreach ($review as $item) : ?>
-                  <?php $cust = $home->getDataCustomerSingle($item['id_customer']); ?>
-                  <div class="reviews-submitted">
-                    <div class="reviewer">
-                      <?= $cust['nama_customer']; ?> - <span>
-                        <?= $item['created_at']; ?>
-                      </span>
-                    </div>
-                    <div class="ratting">
-                      <?php for ($i = 0; $i < $item['rating']; $i++): ?>
-                        <i class="fa fa-star"></i>
-                      <?php endfor ?>
-                    </div>
-                    <p>
-                      <?= $item['review']; ?>
-                    </p>
+                <?php $cust = $home->getDataCustomerSingle($item['id_customer']); ?>
+                <div class="reviews-submitted">
+                  <div class="reviewer">
+                    <?= $cust['nama_customer']; ?> - <span>
+                      <?= $item['created_at']; ?>
+                    </span>
                   </div>
+                  <div class="ratting">
+                    <?php for ($i = 0; $i < $item['rating']; $i++): ?>
+                    <i class="fa fa-star"></i>
+                    <?php endfor ?>
+                  </div>
+                  <p>
+                    <?= $item['review']; ?>
+                  </p>
+                </div>
                 <?php endforeach ?>
 
               </div>
@@ -142,43 +145,43 @@ $pbagi = count($review);
 
             <?php foreach ((array) $dataRekom as $item) : ?>
 
-              <?php
+            <?php
               $getImg = $db->table('produk_detail_gambar')->where('id_produk', $item['id_produk'])->orderBy('id_detail_gambar', 'RANDOM')->get()->getRowArray();
               ?>
 
-              <div class="col-lg-3" style="max-width: 100%;">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a href="/Katalog/<?= $item['id_produk']; ?>">
-                      <?= $item['nama_produk']; ?>
-                    </a>
-                    <div class="ratting">
-                      ⭐⭐⭐⭐⭐
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a href="/Katalog/1">
-                      <img src="/uploads/<?= $getImg['file']; ?>" alt="Product Image">
-                    </a>
-                    <div class="product-action">
-                      <a href="/Katalog/<?= $item['id_produk']; ?>"><i class="fa fa-eye"></i></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <?php if ($item['harga_promo'] != 0) : ?>
-                      <h3>
-                        Rp <?= number_format($item['harga_promo'], 0, ',', '.'); ?> <span
-                          style="text-decoration: line-through; color: red">Rp
-                          <?= number_format($item['harga_produk'], 0, ',', '.'); ?> </span>
-                      </h3>
-                    <?php else : ?>
-                      <h3>
-                        Rp <?= number_format($item['harga_produk'], 0, ',', '.'); ?>
-                      </h3>
-                    <?php endif ?>
+            <div class="col-lg-3" style="max-width: 100%;">
+              <div class="product-item">
+                <div class="product-title">
+                  <a href="/Katalog/<?= $item['id_produk']; ?>">
+                    <?= $item['nama_produk']; ?>
+                  </a>
+                  <div class="ratting">
+                    ⭐⭐⭐⭐⭐
                   </div>
                 </div>
+                <div class="product-image">
+                  <a href="/Katalog/1">
+                    <img src="/uploads/<?= $getImg['file']; ?>" alt="Product Image">
+                  </a>
+                  <div class="product-action">
+                    <a href="/Katalog/<?= $item['id_produk']; ?>"><i class="fa fa-eye"></i></a>
+                  </div>
+                </div>
+                <div class="product-price">
+                  <?php if ($item['harga_promo'] != 0) : ?>
+                  <h3>
+                    Rp <?= number_format($item['harga_promo'], 0, ',', '.'); ?> <span
+                      style="text-decoration: line-through; color: red">Rp
+                      <?= number_format($item['harga_produk'], 0, ',', '.'); ?> </span>
+                  </h3>
+                  <?php else : ?>
+                  <h3>
+                    Rp <?= number_format($item['harga_produk'], 0, ',', '.'); ?>
+                  </h3>
+                  <?php endif ?>
+                </div>
               </div>
+            </div>
 
             <?php
             endforeach
@@ -197,20 +200,20 @@ $pbagi = count($review);
 <?= $this->section('script'); ?>
 
 <script>
-  const updateQty = () => {
-    let qty = $('#qty').val();
-    const stok = parseInt($('#stok').text(), 10);
+const updateQty = () => {
+  let qty = $('#qty').val();
+  const stok = parseInt($('#stok').text(), 10);
 
-    if (qty > stok) {
-      $('#qty').val(stok);
-    }
+  if (qty > stok) {
+    $('#qty').val(stok);
   }
+}
 
-  $('#qty').on('change', updateQty);
+$('#qty').on('change', updateQty);
 
-  $('#btn-plus').on('click', updateQty);
+$('#btn-plus').on('click', updateQty);
 
-  $('#btn-minus').on('click', updateQty);
+$('#btn-minus').on('click', updateQty);
 </script>
 
 <?= $this->endSection(); ?>

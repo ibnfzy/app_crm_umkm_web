@@ -16,6 +16,8 @@ class CustomerPanel extends BaseController
         $this->db = db_connect();
         $this->cart = \Config\Services::cart();
         session()->set('dataCustomer', $this->db->table('customer')->join('ongkir', 'ongkir.id_ongkir = customer.id_ongkir')->where('customer.id_customer', session()->get('id_customer'))->get()->getRowArray());
+
+        session()->set('totalNeedToPay', $this->db->table('transaksi')->where('id_customer', session()->get('id_customer'))->where('status_transaksi', 'Menunggu Bukti Pembayaran')->countAllResults());
     }
 
     public function index()
@@ -352,6 +354,8 @@ class CustomerPanel extends BaseController
         $pdf->writeHTML($html, true, false, true, false, '');
 
         // Output PDF (D = download)
-        return $pdf->Output('laporan_produk.pdf', 'D');
+        $pdfInline = $pdf->Output('invoice.pdf', 'I');
+
+        return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($pdfInline);
     }
 }

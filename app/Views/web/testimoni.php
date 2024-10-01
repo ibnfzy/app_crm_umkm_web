@@ -21,7 +21,7 @@ $db = \Config\Database::connect();
     <div class="row align-items-center review-slider normal-slider">
 
       <?php foreach ($data as $item) : ?>
-        <div class="col-md-6">
+        <div class="col-md-12 col-sm-12 col-lg-12">
           <div class="review-slider-item">
             <div class="review-img">
               <img src="https://www.pngrepo.com/png/102030/180/user.png" alt="Image">

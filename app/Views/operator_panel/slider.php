@@ -19,15 +19,15 @@
         </thead>
         <tbody>
           <?php foreach ((array) $data as $key => $item) : ?>
-            <tr>
-              <td><?= $key + 1 ?></td>
-              <td><img src="/Uploads/<?= $item['file'] ?>" width="100px" alt=""></td>
-              <td>
-                <button onclick="edit('<?= $item['id_slider'] ?>', '<?= $item['file'] ?>')"
-                  class="btn btn-warning btn-sm">Edit</button>
-                <a href="/OperatorPanel/Slider/<?= $item['id_slider'] ?>" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
+          <tr>
+            <td><?= $key + 1 ?></td>
+            <td><img src="/uploads/<?= $item['file'] ?>" width="100px" alt=""></td>
+            <td>
+              <button onclick="edit('<?= $item['id_slider'] ?>', '<?= $item['file'] ?>')"
+                class="btn btn-warning btn-sm">Edit</button>
+              <a href="/OperatorPanel/Slider/<?= $item['id_slider'] ?>" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
           <?php endforeach ?>
         </tbody>
       </table>
@@ -103,13 +103,13 @@
 <?= $this->section('script'); ?>
 
 <script>
-  const edit = (id_slider, file) => {
-    $('#id_slider').val(id_slider);
-    $('#img').attr('src', '/Uploads/' + file);
-    var modal = new mdb.Modal(document.getElementById('edit'));
+const edit = (id_slider, file) => {
+  $('#id_slider').val(id_slider);
+  $('#img').attr('src', '/uploads/' + file);
+  var modal = new mdb.Modal(document.getElementById('edit'));
 
-    modal.show();
-  };
+  modal.show();
+};
 </script>
 
 <?= $this->endSection(); ?>

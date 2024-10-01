@@ -9,7 +9,7 @@
   <meta content="" name="description">
 
   <!-- Favicon -->
-  <link href="/web_assets/img/favicon.ico" rel="icon">
+  <link rel="icon" href="/logo.png" type="image/png" sizes="16x16">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"

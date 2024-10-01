@@ -67,16 +67,16 @@ if ($dataTransaksiCount >= 8) {
         </thead>
         <tbody>
           <?php foreach ($dataTransaksi as $key => $item) : ?>
-          <tr>
-            <td><?= $key + 1 ?></td>
-            <td><?= $item['total_kuantitas_belanja'] ?></td>
-            <td><?= $item['total_bayar_belanja'] ?></td>
-            <td><?= $item['tanggal_checkout'] ?></td>
-            <td><?= $item['status_transaksi'] ?></td>
-            <td>
-              <a href="/OperatorPanel/Invoice/<?= $item['id_transaksi'] ?>" class="btn btn-info">Invoice</a>
-            </td>
-          </tr>
+            <tr>
+              <td><?= $key + 1 ?></td>
+              <td><?= $item['total_kuantitas_belanja'] ?></td>
+              <td><?= $item['total_bayar_belanja'] ?></td>
+              <td><?= $item['tanggal_checkout'] ?></td>
+              <td><?= $item['status_transaksi'] ?></td>
+              <td>
+                <a href="/OperatorPanel/Invoice/<?= $item['id_transaksi'] ?>" class="btn btn-info">Invoice</a>
+              </td>
+            </tr>
           <?php endforeach ?>
         </tbody>
       </table>
@@ -103,16 +103,16 @@ if ($dataTransaksiCount >= 8) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($data as $key => $item) : ?>
-          <tr>
-            <td><?= $key + 1; ?></td>
-            <td><?= $item['id_unique_kupon']; ?></td>
-            <td><?= $item['discount_kupon']; ?>%</td>
-            <td>Rp <?= number_format($item['max_nominal_kupon'], 0, ',', '.'); ?></td>
-            <td><?= $item['level_kupon']; ?></td>
-            <td><?= $item['expired_at']; ?></td>
-            <td><?= $item['deskripsi_kupon']; ?></td>
-          </tr>
+          <?php foreach ($dataKupon as $key => $item) : ?>
+            <tr>
+              <td><?= $key + 1; ?></td>
+              <td><?= $item['id_unique_kupon']; ?></td>
+              <td><?= $item['discount_kupon']; ?>%</td>
+              <td>Rp <?= number_format($item['max_nominal_kupon'], 0, ',', '.'); ?></td>
+              <td><?= $item['level_kupon']; ?></td>
+              <td><?= $item['expired_at']; ?></td>
+              <td><?= $item['deskripsi_kupon']; ?></td>
+            </tr>
           <?php endforeach ?>
         </tbody>
       </table>

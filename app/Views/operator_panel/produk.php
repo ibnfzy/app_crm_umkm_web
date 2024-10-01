@@ -23,39 +23,40 @@
         </thead>
         <tbody>
           <?php foreach ((array) $data as $i => $item) : ?>
-            <tr>
-              <td><?= $i + 1 ?></td>
-              <td><?= $item['id_unique_produk'] ?></td>
-              <td><?= $item['nama_produk'] ?></td>
-              <td><?= $item['stok'] ?></td>
-              <td>Rp <?= number_format($item['harga_produk'], 0, ',', '.') ?></td>
-              <td>Rp <?= number_format($item['harga_promo'], 0, ',', '.') ?></td>
-              <td>
-                <div class="btn-group">
-                  <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" data-mdb-dropdown-init data-mdb-ripple-init
-                      aria-expanded="false">
-                      Edit
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="#"
-                          onclick="edit('<?= $item['id_produk'] ?>', '<?= $item['id_unique_produk'] ?>', '<?= $item['nama_produk'] ?>', '<?= $item['harga_produk'] ?>', '<?= $item['harga_promo'] ?>', '<?= $item['stok'] ?>', '<?= $item['deskripsi'] ?>')"
-                          class="dropdown-item bg-primary text-white">Edit Produk</a>
-                      </li>
-                      <li>
-                        <a href="#" onclick="manageImages('<?= $item['id_produk'] ?>')"
-                          class="dropdown-item bg-primary text-white">Kelola
-                          Gambar</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <a href="/OperatorPanel/Produk/<?= $item['id_produk'] ?>" class="btn btn-sm btn-danger">Delete</a>
-                  <a href="/OperatorPanel/Produk/Laporan/<?= $item['id_produk'] ?>" class="btn btn-sm btn-primary">Laporan
-                    Produk</a>
+          <tr>
+            <td><?= $i + 1 ?></td>
+            <td><?= $item['id_unique_produk'] ?></td>
+            <td><?= $item['nama_produk'] ?></td>
+            <td><?= $item['stok'] ?></td>
+            <td>Rp <?= number_format($item['harga_produk'], 0, ',', '.') ?></td>
+            <td>Rp <?= number_format($item['harga_promo'], 0, ',', '.') ?></td>
+            <td>
+              <div class="btn-group">
+                <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" data-mdb-dropdown-init data-mdb-ripple-init
+                    aria-expanded="false">
+                    Edit
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="#"
+                        onclick="edit('<?= $item['id_produk'] ?>', '<?= $item['id_unique_produk'] ?>', '<?= $item['nama_produk'] ?>', '<?= $item['harga_produk'] ?>', '<?= $item['harga_promo'] ?>', '<?= $item['stok'] ?>', '<?= $item['deskripsi'] ?>')"
+                        class="dropdown-item bg-primary text-white">Edit Produk</a>
+                    </li>
+                    <li>
+                      <a href="#" onclick="manageImages('<?= $item['id_produk'] ?>')"
+                        class="dropdown-item bg-primary text-white">Kelola
+                        Gambar</a>
+                    </li>
+                  </ul>
                 </div>
-              </td>
-            </tr>
+                <a href="/OperatorPanel/Produk/<?= $item['id_produk'] ?>" class="btn btn-sm btn-danger">Delete</a>
+                <a href="/OperatorPanel/Produk/Laporan/<?= $item['id_produk'] ?>" class="btn btn-sm btn-primary"
+                  target="_blank">Laporan
+                  Produk</a>
+              </div>
+            </td>
+          </tr>
           <?php endforeach ?>
         </tbody>
       </table>
@@ -248,57 +249,57 @@
 
 <?= $this->section('script'); ?>
 <script>
-  $('#harga_promo').on('keyup', function() {
-    var harga_produk = $('#harga_produk').val();
-    var harga_promo = $('#harga_promo').val();
+$('#harga_promo').on('keyup', function() {
+  var harga_produk = $('#harga_produk').val();
+  var harga_promo = $('#harga_promo').val();
 
-    if (parseInt(harga_promo) > parseInt(harga_produk)) {
-      $('#error_harga_promo').text('Harga promo harus lebih kecil dari harga produk');
-      $('#error_harga_promo').addClass('text-danger');
-    } else {
-      $('#error_harga_promo').text('');
-      $('#error_harga_promo').removeClass('text-danger');
-    }
-  });
+  if (parseInt(harga_promo) > parseInt(harga_produk)) {
+    $('#error_harga_promo').text('Harga promo harus lebih kecil dari harga produk');
+    $('#error_harga_promo').addClass('text-danger');
+  } else {
+    $('#error_harga_promo').text('');
+    $('#error_harga_promo').removeClass('text-danger');
+  }
+});
 
-  $('#harga_promo_edit').on('keyup', function() {
-    var harga_produk = $('#harga_produk_edit').val();
-    var harga_promo = $('#harga_promo_edit').val();
+$('#harga_promo_edit').on('keyup', function() {
+  var harga_produk = $('#harga_produk_edit').val();
+  var harga_promo = $('#harga_promo_edit').val();
 
-    if (parseInt(harga_promo) > parseInt(harga_produk)) {
-      $('#error_harga_promo_edit').text('Harga promo harus lebih kecil dari harga produk');
-      $('#error_harga_promo_edit').addClass('text-danger');
-    } else {
-      $('#error_harga_promo_edit').text('');
-      $('#error_harga_promo_edit').removeClass('text-danger');
-    }
-  })
+  if (parseInt(harga_promo) > parseInt(harga_produk)) {
+    $('#error_harga_promo_edit').text('Harga promo harus lebih kecil dari harga produk');
+    $('#error_harga_promo_edit').addClass('text-danger');
+  } else {
+    $('#error_harga_promo_edit').text('');
+    $('#error_harga_promo_edit').removeClass('text-danger');
+  }
+})
 
-  const edit = (id, id_unique_produk, nama_produk, harga_produk, harga_promo, stok, deskripsi) => {
-    var modal = new mdb.Modal(document.getElementById('edit'));
+const edit = (id, id_unique_produk, nama_produk, harga_produk, harga_promo, stok, deskripsi) => {
+  var modal = new mdb.Modal(document.getElementById('edit'));
 
-    document.getElementById('id_unique_produk_edit').value = id_unique_produk;
-    document.getElementById('nama_produk_edit').value = nama_produk;
-    document.getElementById('harga_produk_edit').value = harga_produk;
-    document.getElementById('harga_promo_edit').value = harga_promo;
-    document.getElementById('stok_edit').value = stok;
-    document.getElementById('deskripsi_edit').value = deskripsi;
-    document.getElementById('id_produk').value = id;
+  document.getElementById('id_unique_produk_edit').value = id_unique_produk;
+  document.getElementById('nama_produk_edit').value = nama_produk;
+  document.getElementById('harga_produk_edit').value = harga_produk;
+  document.getElementById('harga_promo_edit').value = harga_promo;
+  document.getElementById('stok_edit').value = stok;
+  document.getElementById('deskripsi_edit').value = deskripsi;
+  document.getElementById('id_produk').value = id;
 
-    modal.show();
-  };
+  modal.show();
+};
 
-  const manageImages = (id_produk) => {
-    var modal = new mdb.Modal(document.getElementById('manageImagesModal'));
+const manageImages = (id_produk) => {
+  var modal = new mdb.Modal(document.getElementById('manageImagesModal'));
 
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.onload = function() {
-      let text = ""
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onload = function() {
+    let text = ""
 
-      const resObj = JSON.parse(this.responseText);
+    const resObj = JSON.parse(this.responseText);
 
-      if (resObj['data'].length == 0) {
-        text = `
+    if (resObj['data'].length == 0) {
+      text = `
         <div class="col-md-12 mb-4">
           <div class="position-relative">
             <p class="text-center">Tidak ada gambar</p>
@@ -306,12 +307,12 @@
         </div>
 
       `
-      } else {
-        for (let d in resObj['data']) {
-          fileUrl = '/uploads/' + resObj['data'][d].file;
-          idDetailGambar = resObj['data'][d].id_detail_gambar;
+    } else {
+      for (let d in resObj['data']) {
+        fileUrl = '/uploads/' + resObj['data'][d].file;
+        idDetailGambar = resObj['data'][d].id_detail_gambar;
 
-          text += `
+        text += `
       <div class="col-md-4 mb-4">
             <div class="position-relative">
               <img src="${fileUrl}" class="img-fluid img-thumbnail" alt="Image">
@@ -319,36 +320,36 @@
             </div>
           </div>
       `
-        }
       }
-
-      document.getElementById('imageGrid').innerHTML = text;
-      $('#addImage').attr('onclick', `addImage('${id_produk}')`);
-      modal.show();
     }
 
-    xmlhttp.open('GET', '<?= base_url('OperatorPanel/manage_images'); ?>/' + id_produk);
-    xmlhttp.send();
-  };
-
-  const deleteImage = (id_detail_gambar) => {
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.onload = function() {
-      const resObj = JSON.parse(this.responseText);
-      const idProduk = resObj['id_produk'];
-      $('#manageImagesModal').modal('hide');
-      manageImages(idProduk);
-    }
-    xmlhttp.open('GET', '<?= base_url('OperatorPanel/delete_image'); ?>/' + id_detail_gambar);
-    xmlhttp.send();
-  };
-
-  const addImage = (id_produk) => {
-    const modal = new mdb.Modal(document.getElementById('addImageModal'));
-
-    $('#manageImagesModal').modal('hide');
-    document.getElementById('idProduk').value = id_produk;
+    document.getElementById('imageGrid').innerHTML = text;
+    $('#addImage').attr('onclick', `addImage('${id_produk}')`);
     modal.show();
-  };
+  }
+
+  xmlhttp.open('GET', '<?= base_url('OperatorPanel/manage_images'); ?>/' + id_produk);
+  xmlhttp.send();
+};
+
+const deleteImage = (id_detail_gambar) => {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onload = function() {
+    const resObj = JSON.parse(this.responseText);
+    const idProduk = resObj['id_produk'];
+    $('#manageImagesModal').modal('hide');
+    manageImages(idProduk);
+  }
+  xmlhttp.open('GET', '<?= base_url('OperatorPanel/delete_image'); ?>/' + id_detail_gambar);
+  xmlhttp.send();
+};
+
+const addImage = (id_produk) => {
+  const modal = new mdb.Modal(document.getElementById('addImageModal'));
+
+  $('#manageImagesModal').modal('hide');
+  document.getElementById('idProduk').value = id_produk;
+  modal.show();
+};
 </script>
 <?= $this->endSection(); ?>

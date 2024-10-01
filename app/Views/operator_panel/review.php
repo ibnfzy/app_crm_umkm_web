@@ -14,23 +14,18 @@
             <th>Nama Customer</th>
             <th>Rating</th>
             <th>Review</th>
-            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ((array) $data as $key => $item) : ?>
-          <tr>
-            <td><?= $key + 1 ?></td>
-            <td><?= $item['id_unique_produk'] ?></td>
-            <td><?= $item['nama_produk'] ?></td>
-            <td><?= $item['nama_customer'] ?></td>
-            <td><?= $item['rating'] ?></td>
-            <td><?= $item['review'] ?></td>
-            <td>
-              <a href="/operator_panel/review/edit/<?= $item['id_review'] ?>" class="btn btn-warning btn-sm">Edit</a>
-              <a href="/operator_panel/review/delete/<?= $item['id_review'] ?>" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-          </tr>
+            <tr>
+              <td><?= $key + 1 ?></td>
+              <td><?= $item['id_unique_produk'] ?></td>
+              <td><?= $item['nama_produk'] ?></td>
+              <td><?= $item['nama_customer'] ?></td>
+              <td><?= $item['rating'] ?></td>
+              <td><?= $item['review'] ?></td>
+            </tr>
           <?php endforeach ?>
         </tbody>
       </table>

@@ -13,6 +13,8 @@ class OperatorPanel extends BaseController
     public function __construct()
     {
         $this->db = db_connect();
+
+        session()->set('totalValidasi', $this->db->table('transaksi')->where('status_transaksi', 'Menunggu validasi bukti pembayaran')->countAllResults());
     }
 
     /**
@@ -93,7 +95,7 @@ class OperatorPanel extends BaseController
             $fileName = $f[$key]->getRandomName();
 
             if (!$f[$key]->hasMoved()) {
-                $f[$key]->move('Uploads', $fileName);
+                $f[$key]->move('uploads', $fileName);
             }
 
             $this->db->table('produk_detail_gambar')->insert([
@@ -163,7 +165,7 @@ class OperatorPanel extends BaseController
         $getFiles = $this->db->table('produk_detail_gambar')->where('id_produk', $id)->get()->getResultArray();
 
         foreach ($getFiles as $item) {
-            unlink('Uploads/' . $item['file']);
+            unlink('uploads/' . $item['file']);
         }
 
         $this->db->table('produk_detail_gambar')->where('id_produk', $id)->delete();
@@ -212,7 +214,7 @@ class OperatorPanel extends BaseController
             $fileName = $f[$key]->getRandomName();
 
             if (!$f[$key]->hasMoved()) {
-                $f[$key]->move('Uploads', $fileName);
+                $f[$key]->move('uploads', $fileName);
             }
 
             $this->db->table('produk_detail_gambar')->insert([
@@ -236,7 +238,7 @@ class OperatorPanel extends BaseController
 
         $getFiles = $this->db->table('produk_detail_gambar')->where('id_detail_gambar', $id)->get()->getRowArray();
 
-        unlink('Uploads/' . $getFiles['file']);
+        unlink('uploads/' . $getFiles['file']);
 
         $this->db->table('produk_detail_gambar')->where('id_detail_gambar', $id)->delete();
 
@@ -645,7 +647,7 @@ class OperatorPanel extends BaseController
             return redirect()->to(base_url('OperatorPanel'))->with('type-status', 'error')->with('dataMessage', $this->validator->getErrors());
         }
 
-        $this->db->table('informasi_toko')->where('id_informasi', '1')->update([
+        $this->db->table('informasi_toko')->where('id_informasi_toko', '1')->update([
             'nama_toko' => $this->request->getPost('nama_toko'),
             'kontak_wa' => $this->request->getPost('kontak_wa'),
             'alamat' => $this->request->getPost('alamat'),
@@ -715,8 +717,10 @@ class OperatorPanel extends BaseController
         // Tulis HTML ke PDF
         $pdf->writeHTML($html, true, false, true, false, '');
 
-        // Output PDF (D = download)
-        return $pdf->Output('laporan_produk.pdf', 'D');
+
+        $pdfInline = $pdf->Output('laporan_produk.pdf', 'I');
+
+        return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($pdfInline);
     }
 
     public function laporan_bulanan()
@@ -764,7 +768,9 @@ class OperatorPanel extends BaseController
         $pdf->writeHTML($html, true, false, true, false, '');
 
         // Output PDF (D = download)
-        return $pdf->Output('laporan_transaksi_bulanan.pdf', 'D');
+        $pdfInline = $pdf->Output('laporan_transaksi_bulanan.pdf', 'I');
+
+        return $this->response->setHeader('Content-Type', 'application/pdf')->setBody($pdfInline);
     }
 
     public function pelanggann_detail($id)

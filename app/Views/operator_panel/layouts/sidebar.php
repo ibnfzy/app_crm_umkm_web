@@ -5,7 +5,7 @@
       <a href="/OperatorPanel/Profile" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init
         aria-current="true">
         <i class="fa-solid fa-store fa-fw me-3"></i>
-        <span>Profile Toko <span class="badge badge-info ms-2">8</span></span>
+        <span>Profile Toko <span class="badge badge-info ms-2"><?= session('totalValidasi'); ?></span></span>
       </a>
       <a href="/OperatorPanel/Produk" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
         <i class="fa-solid fa-box-open fa-fw me-3"></i>

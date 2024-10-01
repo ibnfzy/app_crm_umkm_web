@@ -5,7 +5,7 @@
       <a href="/CustomerPanel/Profile" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init
         aria-current="true">
         <i class="fa-solid fa-user fa-fw me-3"></i>
-        <span>Profile <span class="badge badge-info ms-2">8</span></span>
+        <span>Profile <span class="badge badge-info ms-2"><?= session('totalNeedToPay'); ?></span></span>
       </a>
       <a href="/CustomerPanel/Orderan" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
         <i class="fa-solid fa-cart-shopping fa-fw me-3"></i>
