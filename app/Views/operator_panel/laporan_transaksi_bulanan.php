@@ -40,6 +40,8 @@
         </th>
         <th style="padding: 8px; border: 1px solid #000; background-color: #007bff; color: #ffffff;">Nama Customer
         </th>
+        <th style="padding: 8px; border: 1px solid #000; background-color: #007bff; color: #ffffff;">Nama Produk
+        </th>
         <th style="padding: 8px; border: 1px solid #000; background-color: #007bff; color: #ffffff;">Jumlah</th>
         <th style="padding: 8px; border: 1px solid #000; background-color: #007bff; color: #ffffff;">Harga Satuan</th>
         <th style="padding: 8px; border: 1px solid #000; background-color: #007bff; color: #ffffff;">Total</th>
@@ -48,23 +50,24 @@
     <tbody>
       <?php $total = 0; ?>
       <?php if (empty($data)) : ?>
-        <tr>
-          <td colspan="5" style="padding: 8px; border: 1px solid #000; text-align: center;">Tidak ada data</td>
-        </tr>
+      <tr>
+        <td colspan="5" style="padding: 8px; border: 1px solid #000; text-align: center;">Tidak ada data</td>
+      </tr>
       <?php endif ?>
 
       <?php foreach ($data as $key => $item) : ?>
-        <?php $total += $item['subtotal']; ?>
-        <tr>
-          <td style="padding: 8px; border: 1px solid #000;"><?= $key + 1; ?></td>
-          <td style="padding: 8px; border: 1px solid #000;"><?= $item['tanggal_checkout']; ?></td>
-          <td style="padding: 8px; border: 1px solid #000;"><?= $item['nama_customer']; ?></td>
-          <td style="padding: 8px; border: 1px solid #000;"><?= $item['kuantitas']; ?></td>
-          <td style="padding: 8px; border: 1px solid #000;">Rp
-            <?= number_format($item['harga_produk_beli'], 0, ',', '.'); ?></td>
-          <td style="padding: 8px; border: 1px solid #000;">Rp <?= number_format($item['subtotal'], 0, ',', '.'); ?>
-          </td>
-        </tr>
+      <?php $total += $item['subtotal']; ?>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #000;"><?= $key + 1; ?></td>
+        <td style="padding: 8px; border: 1px solid #000;"><?= $item['tanggal_checkout']; ?></td>
+        <td style="padding: 8px; border: 1px solid #000;"><?= $item['nama_customer']; ?></td>
+        <td style="padding: 8px; border: 1px solid #000;"><?= $item['nama_produk']; ?></td>
+        <td style="padding: 8px; border: 1px solid #000;"><?= $item['kuantitas']; ?></td>
+        <td style="padding: 8px; border: 1px solid #000;">Rp
+          <?= number_format($item['harga_produk_beli'], 0, ',', '.'); ?></td>
+        <td style="padding: 8px; border: 1px solid #000;">Rp <?= number_format($item['subtotal'], 0, ',', '.'); ?>
+        </td>
+      </tr>
       <?php endforeach ?>
 
       <tr>

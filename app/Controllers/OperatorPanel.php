@@ -89,7 +89,6 @@ class OperatorPanel extends BaseController
 
         $getId = $this->db->query("SELECT LAST_INSERT_ID()")->getRowArray()['LAST_INSERT_ID()'];
         $f = $this->request->getFiles('files')['files'];
-        // dd($f);
 
         foreach ($f as $key => $file) {
             $fileName = $f[$key]->getRandomName();
@@ -725,7 +724,7 @@ class OperatorPanel extends BaseController
 
     public function laporan_bulanan()
     {
-        $getTransaksiDetail = $this->db->table('transaksi_detail')->join('transaksi', 'transaksi_detail.id_transaksi = transaksi.id_transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('transaksi.status_transaksi', 'Transaksi Berhasil')->where('MONTH(transaksi.tanggal_checkout)', date('m/Y', strtotime($this->request->getPost('bulan'))))->get()->getResultArray();
+        $getTransaksiDetail = $this->db->table('transaksi_detail')->select('transaksi_detail.*, transaksi.tanggal_checkout as tanggal_checkout, customer.nama_customer as nama_customer, produk.nama_produk as nama_produk')->join('produk', 'produk.id_produk=transaksi_detail.id_produk')->join('transaksi', 'transaksi_detail.id_transaksi = transaksi.id_transaksi')->join('customer', 'transaksi.id_customer = customer.id_customer')->where('transaksi.status_transaksi', 'Transaksi Berhasil')->where('MONTH(transaksi.tanggal_checkout)', date('m/Y', strtotime($this->request->getPost('bulan'))))->get()->getResultArray();
 
         $informasiToko = $this->db->table('informasi_toko')->where('id_informasi_toko', 1)->get()->getRowArray();
 

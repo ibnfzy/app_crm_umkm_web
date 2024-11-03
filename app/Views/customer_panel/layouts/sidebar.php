@@ -18,8 +18,8 @@
       <a href="/CustomerPanel/Review" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>
         <i class="fa-solid fa-comment-dots fa-fw me-3"></i>
         <span>Review</span></a>
-      <a href="#" class="list-group-item list-group-item-action py-2 bg-success text-white" data-mdb-ripple-init
-        target="_blank">
+      <a href="https://wa.me/<?= preg_replace('/^0/', '62', session('dataToko')['kontak_wa']) ?>"
+        class="list-group-item list-group-item-action py-2 bg-success text-white" data-mdb-ripple-init target="_blank">
         <i class="fa-brands fa-whatsapp fa-fw me-3"></i>
         <span>Hubungi Toko</span></a>
       <a href="/Katalog" class="list-group-item list-group-item-action py-2" data-mdb-ripple-init>

@@ -96,9 +96,12 @@ $total = [];
                       </td>
                       <td>
                         <div class="qty">
-                          <button type="button" class="btn-minus" id="btn-minus-<?= $q ?>" data-stok="<?= $item['stok'] ?>"><i class="fa fa-minus"></i></button>
-                          <input id="qty<?= $q ?>" type="text" value="<?= $item['qty']; ?>" name="qtybutton[<?= $i ?>]" data-stok="<?= $item['stok'] ?>">
-                          <button type="button" class="btn-plus" id="btn-plus-<?= $q ?>"><i class="fa fa-plus" data-stok="<?= $item['stok'] ?>"></i></button>
+                          <button type="button" class="btn-minus" id="btn-minus-<?= $q ?>"
+                            data-stok="<?= $item['stok'] ?>"><i class="fa fa-minus"></i></button>
+                          <input id="qty<?= $q ?>" type="text" value="<?= $item['qty']; ?>" name="qtybutton[<?= $i ?>]"
+                            data-stok="<?= $item['stok'] ?>">
+                          <button type="button" class="btn-plus" id="btn-plus-<?= $q ?>"><i class="fa fa-plus"
+                              data-stok="<?= $item['stok'] ?>"></i></button>
                         </div>
                       </td>
                       <td>Rp. <?= number_format($subTotal, 0, ',', '.'); ?></td>
@@ -134,9 +137,12 @@ $total = [];
               <div class="col-md-12">
                 <div class="py-3">
                   <?php if (session()->get('discount_kupon') != 0 || session()->get('discount_kupon') != null) : ?>
-                    <button class="btn bg-success text-white" data-toggle="modal" data-target="#voucher" type="button" data-idCustKupon="<?= session()->get('id_customer_kupon'); ?>">Kupon Diskon <?= session()->get('discount_kupon'); ?>% terpakai</button>
+                    <button class="btn bg-success text-white" data-toggle="modal" data-target="#voucher" type="button"
+                      data-idCustKupon="<?= session()->get('id_customer_kupon'); ?>">Kupon Diskon
+                      <?= session()->get('discount_kupon'); ?>% terpakai</button>
                   <?php else : ?>
-                    <button class="btn btn-outlined-danger" data-toggle="modal" data-target="#voucher" type="button">Pilih Voucher</button>
+                    <button class="btn btn-outlined-danger" data-toggle="modal" data-target="#voucher" type="button">Pilih
+                      Voucher</button>
                   <?php endif ?>
                 </div>
               </div>
@@ -152,7 +158,8 @@ $total = [];
                   </div>
                   <div class="cart-btn row">
                     <button type="submit">Update Keranjang</button>
-                    <button type="button" class="btn btn-outlined-danger text-white" onclick="modalShow()">Checkout</button>
+                    <button type="button" class="btn btn-outlined-danger text-white"
+                      onclick="modalShow()">Checkout</button>
                   </div>
                 </div>
               </div>
@@ -268,9 +275,15 @@ $total = [];
                   background: linear-gradient(to bottom, #c6efce, #a5d6a7);
                 }
               </style>
-              <label class="list-group-item px-5 <?= $voucher['id_customer_kupon'] == session()->get('id_customer_kupon') ? 'bg-gradient-selected' : 'bg-gradient' ?>" ;?>">
-                <input type="radio" class="form-check-input me-2" name="voucher_id" value="<?= $voucher['id_customer_kupon']; ?>" <?= $voucher['id_customer_kupon'] == session()->get('id_customer_kupon') ? 'checked' : ''; ?>> Max Potongan Rp.
-                <?= number_format($voucher['max_nominal_kupon'], 0, ',', '.'); ?> - Diskon: <?= $voucher['discount_kupon']; ?>% <br>
+              <label
+                class="list-group-item px-5 <?= $voucher['id_customer_kupon'] == session()->get('id_customer_kupon') ? 'bg-gradient-selected' : 'bg-gradient' ?>"
+                ;?>">
+                <input type="radio" class="form-check-input me-2" name="voucher_id"
+                  value="<?= $voucher['id_customer_kupon']; ?>"
+                  <?= $voucher['id_customer_kupon'] == session()->get('id_customer_kupon') ? 'checked' : ''; ?>> Max
+                Potongan Rp.
+                <?= number_format($voucher['max_nominal_kupon'], 0, ',', '.'); ?> - Diskon:
+                <?= $voucher['discount_kupon']; ?>% <br>
                 Deskripsi : <?= $voucher['deskripsi_kupon']; ?>
               </label>
             <?php endforeach; ?>

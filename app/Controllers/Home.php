@@ -28,6 +28,13 @@ class Home extends BaseController
         ]);
     }
 
+    public function search()
+    {
+        return view('web/katalog', [
+            'data' => $this->db->table('produk')->like('nama_produk', $this->request->getVar('search'))->orderBy('id_produk', 'DESC')->get()->getResultArray()
+        ]);
+    }
+
     public function detail($id)
     {
         return view('web/detail', [

@@ -18,28 +18,28 @@
     integrity='sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=='
     crossorigin='anonymous' />
   <style>
-    .divider:after,
-    .divider:before {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #eee;
-    }
+  .divider:after,
+  .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
 
+  .h-custom {
+    height: calc(100% - 73px);
+  }
+
+  @media (max-width: 450px) {
     .h-custom {
-      height: calc(100% - 73px);
+      height: 100%;
     }
+  }
 
-    @media (max-width: 450px) {
-      .h-custom {
-        height: 100%;
-      }
-    }
-
-    #map {
-      height: 400px;
-      width: 100%;
-    }
+  #map {
+    height: 400px;
+    width: 100%;
+  }
   </style>
 </head>
 
@@ -91,7 +91,7 @@
               <label class="form-label" for="kota">Pilih Kota Pengiriman</label>
               <select name="kota" id="kota" class="form-select form-select-lg mb-3">
                 <?php foreach ($kota_tersedia as $key => $item) : ?>
-                  <option value="<?= $key ?>"><?= $key ?></option>
+                <option value="<?= $key ?>"><?= $key ?></option>
                 <?php endforeach ?>
               </select>
             </div>
@@ -116,7 +116,7 @@
 
             <div class="text-center text-lg-start pt-2">
               <button class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" type="submit"
-                id="submitbtn">Login</button>
+                id="submitbtn">Register</button>
               <button class="btn btn-warning btn-lg" id="cekKesediaan" type="button"
                 style="padding-left: 2.5rem; padding-right: 2.5rem;" hidden="true">Cek kesediaan pengiriman</button>
             </div>
@@ -148,23 +148,23 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
   <script>
-    toastr.options = {
-      "closeButton": true,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": true,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    }
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
   </script>
 
   <?php
@@ -181,148 +181,148 @@
   ?>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Inisialisasi peta
-      var map = L.map('map').setView([-6.200000, 106.816666], 8);
+  document.addEventListener("DOMContentLoaded", function() {
+    // Inisialisasi peta
+    var map = L.map('map').setView([-6.200000, 106.816666], 8);
 
-      const kota_tersedia = <?= json_encode($kota_tersedia) ?>;
-      let kota = '';
+    const kota_tersedia = <?= json_encode($kota_tersedia) ?>;
+    let kota = '';
 
-      // Menambahkan tile layer dari OpenStreetMap
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+    // Menambahkan tile layer dari OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-      // Marker untuk menunjukkan lokasi yang dipilih
-      var marker = L.marker([-6.200000, 106.816666]).addTo(map);
+    // Marker untuk menunjukkan lokasi yang dipilih
+    var marker = L.marker([-6.200000, 106.816666]).addTo(map);
 
-      // Fungsi untuk memperbarui alamat berdasarkan koordinat
-      function updateAddress(lat, lng) {
-        var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            if (data.address) {
-              var address =
-                `${data.address.road}, ${data.address.city}, ${data.address.state}, ${data.address.country}, ${data.address.postcode}`;
-              document.getElementById('alamat').value = address;
-              kota = data.address.city;
-              document.getElementById('kota').value = kota;
+    // Fungsi untuk memperbarui alamat berdasarkan koordinat
+    function updateAddress(lat, lng) {
+      var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.address) {
+            var address =
+              `${data.address.road}, ${data.address.city}, ${data.address.state}, ${data.address.country}, ${data.address.postcode}`;
+            document.getElementById('alamat').value = address;
+            kota = data.address.city;
+            document.getElementById('kota').value = kota;
 
-            } else {
-              document.getElementById('alamat').value = "Alamat tidak ditemukan pada map API ()";
-            }
-          })
-          .catch(error => console.error('Error:', error));
-      }
+          } else {
+            document.getElementById('alamat').value = "Alamat tidak ditemukan pada map API ()";
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 
-      // Fungsi untuk memperbarui peta berdasarkan alamat
-      function updateMap(address) {
-        var url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${address}`;
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            if (data.length > 0) {
-              var lat = data[0].lat;
-              var lon = data[0].lon;
-              var latlng = new L.LatLng(lat, lon);
-              marker.setLatLng(latlng);
-              map.setView(latlng, 13);
-            }
-
-          })
-          .catch(error => console.error('Error:', error));
-      }
-
-      // Fungsi untuk menggunakan lokasi GPS pengguna
-      function locateUser() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-            var latlng = new L.LatLng(lat, lng);
+    // Fungsi untuk memperbarui peta berdasarkan alamat
+    function updateMap(address) {
+      var url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${address}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length > 0) {
+            var lat = data[0].lat;
+            var lon = data[0].lon;
+            var latlng = new L.LatLng(lat, lon);
             marker.setLatLng(latlng);
             map.setView(latlng, 13);
-            updateAddress(lat, lng);
-          }, function() {
-            swal({
-              title: 'Lokasi Tidak Ditemukan',
-              text: 'Lokasi tidak dapat ditemukan. Pastikan GPS Anda aktif.',
-              icon: 'error',
-              button: 'OK',
-            });
-          });
-        } else {
+          }
+
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Fungsi untuk menggunakan lokasi GPS pengguna
+    function locateUser() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          var latlng = new L.LatLng(lat, lng);
+          marker.setLatLng(latlng);
+          map.setView(latlng, 13);
+          updateAddress(lat, lng);
+        }, function() {
           swal({
-            title: 'Geo Lokasi tidak support pada browser ini',
+            title: 'Lokasi Tidak Ditemukan',
+            text: 'Lokasi tidak dapat ditemukan. Pastikan GPS Anda aktif.',
             icon: 'error',
             button: 'OK',
           });
-        }
+        });
+      } else {
+        swal({
+          title: 'Geo Lokasi tidak support pada browser ini',
+          icon: 'error',
+          button: 'OK',
+        });
       }
+    }
 
-      // Event listener untuk klik pada peta
-      map.on('click', function(e) {
-        var lat = e.latlng.lat;
-        var lng = e.latlng.lng;
-        marker.setLatLng(e.latlng);
-        updateAddress(lat, lng);
-      });
-
-      // Event listener untuk tombol "Gunakan Lokasi Saya"
-      document.getElementById('locateBtn').addEventListener('click', function() {
-        locateUser();
-      });
-
-      // Event listener untuk cek kesediaan pengiriman
-      document.getElementById('cekKesediaan').addEventListener('click', function() {
-        const checkKetersediaan = kota_tersedia.hasOwnProperty(kota)
-
-        if (!checkKetersediaan) {
-          swal({
-            title: 'Kota Tidak Tersedia',
-            text: 'Kota anda belum tersedia untuk pengiriman, hubungi admin untuk informasi lebih lanjut.',
-            icon: 'error',
-            button: 'OK',
-          })
-        } else {
-          const tarif = kota_tersedia[kota]
-          swal({
-            title: 'Kota Tersedia',
-            text: 'Kota anda tersedia untuk pengiriman. dengan Tarif pengiriman Rp ' + tarif + '.',
-            icon: 'success',
-            button: 'OK',
-          })
-
-          document.getElementById('submitbtn').removeAttribute('hidden')
-          document.getElementById('cekKesediaan').setAttribute('hidden', 'true')
-        }
-      })
-
-      // Event listener untuk perubahan pada input alamat
-      document.getElementById('alamat').addEventListener('input', function() {
-        var address = this.value;
-        updateMap(address);
-        document.getElementById('submitbtn').setAttribute('hidden', 'true');
-        document.getElementById('cekKesediaan').removeAttribute('hidden');
-
-      });
-
-      document.getElementById('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const password = document.getElementById('password').value
-        const password_konfirmasi = document.getElementById('confirm_password').value
-        if (password != password_konfirmasi) {
-          swal({
-            title: 'Password Tidak Sama',
-            icon: 'error',
-            button: 'OK',
-          })
-          return
-        }
-        this.submit()
-      })
+    // Event listener untuk klik pada peta
+    map.on('click', function(e) {
+      var lat = e.latlng.lat;
+      var lng = e.latlng.lng;
+      marker.setLatLng(e.latlng);
+      updateAddress(lat, lng);
     });
+
+    // Event listener untuk tombol "Gunakan Lokasi Saya"
+    document.getElementById('locateBtn').addEventListener('click', function() {
+      locateUser();
+    });
+
+    // Event listener untuk cek kesediaan pengiriman
+    document.getElementById('cekKesediaan').addEventListener('click', function() {
+      const checkKetersediaan = kota_tersedia.hasOwnProperty(kota)
+
+      if (!checkKetersediaan) {
+        swal({
+          title: 'Kota Tidak Tersedia',
+          text: 'Kota anda belum tersedia untuk pengiriman, hubungi admin untuk informasi lebih lanjut.',
+          icon: 'error',
+          button: 'OK',
+        })
+      } else {
+        const tarif = kota_tersedia[kota]
+        swal({
+          title: 'Kota Tersedia',
+          text: 'Kota anda tersedia untuk pengiriman. dengan Tarif pengiriman Rp ' + tarif + '.',
+          icon: 'success',
+          button: 'OK',
+        })
+
+        document.getElementById('submitbtn').removeAttribute('hidden')
+        document.getElementById('cekKesediaan').setAttribute('hidden', 'true')
+      }
+    })
+
+    // Event listener untuk perubahan pada input alamat
+    document.getElementById('alamat').addEventListener('input', function() {
+      var address = this.value;
+      updateMap(address);
+      document.getElementById('submitbtn').setAttribute('hidden', 'true');
+      document.getElementById('cekKesediaan').removeAttribute('hidden');
+
+    });
+
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('password').value
+      const password_konfirmasi = document.getElementById('confirm_password').value
+      if (password != password_konfirmasi) {
+        swal({
+          title: 'Password Tidak Sama',
+          icon: 'error',
+          button: 'OK',
+        })
+        return
+      }
+      this.submit()
+    })
+  });
   </script>
 </body>
 

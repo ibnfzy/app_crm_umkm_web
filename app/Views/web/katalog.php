@@ -11,7 +11,7 @@
         <div class="row">
 
           <?php if (count($data) == 0) : ?>
-          <div class="col-md-12" style="padding: 15px; text-align: center;">Data tidak ditemukan</div>
+          <div class="col-md-12 vh-100" style="padding: 15px; text-align: center;">Data tidak ditemukan</div>
           <?php endif ?>
 
           <?php foreach ((array) $data as $item) : ?>

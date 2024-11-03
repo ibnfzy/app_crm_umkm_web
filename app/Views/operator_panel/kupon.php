@@ -24,23 +24,23 @@
         </thead>
         <tbody>
           <?php foreach ((array) $data as $key => $item) : ?>
-          <tr>
-            <td><?= $key + 1 ?></td>
-            <td><?= $item['id_unique_kupon'] ?></td>
-            <td><?= $item['deskripsi_kupon'] ?></td>
-            <td>Rp <?= number_format($item['max_nominal_kupon'], 0, ',', '.') ?></td>
-            <td><?= $item['discount_kupon'] ?>%</td>
-            <td>Level <?= $item['level_kupon'] ?></td>
-            <td><?= $item['created_at'] ?></td>
-            <td>
-              <div class="btn-group-vertical">
-                <button type="button"
-                  onclick="edit('<?= $item['id_kupon'] ?>', '<?= $item['id_unique_kupon'] ?>', '<?= $item['max_nominal_kupon'] ?>', '<?= $item['discount_kupon'] ?>', '<?= $item['level_kupon'] ?>', '<?= $item['deskripsi_kupon'] ?>')"
-                  class="btn btn-sm btn-primary">Edit</button>
-                <a href="/OperatorPanel/Kupon/<?= $item['id_kupon'] ?>" class="btn btn-sm btn-danger">Delete</a>
-              </div>
-            </td>
-          </tr>
+            <tr>
+              <td><?= $key + 1 ?></td>
+              <td><?= $item['id_unique_kupon'] ?></td>
+              <td><?= $item['deskripsi_kupon'] ?></td>
+              <td>Rp <?= number_format($item['max_nominal_kupon'], 0, ',', '.') ?></td>
+              <td><?= $item['discount_kupon'] ?>%</td>
+              <td>Level <?= $item['level_kupon'] ?></td>
+              <td><?= $item['created_at'] ?></td>
+              <td>
+                <div class="btn-group-vertical">
+                  <button type="button"
+                    onclick="edit('<?= $item['id_kupon'] ?>', '<?= $item['id_unique_kupon'] ?>', '<?= $item['max_nominal_kupon'] ?>', '<?= $item['discount_kupon'] ?>', '<?= $item['level_kupon'] ?>', '<?= $item['deskripsi_kupon'] ?>')"
+                    class="btn btn-sm btn-primary">Edit</button>
+                  <a href="/OperatorPanel/Kupon/<?= $item['id_kupon'] ?>" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </td>
+            </tr>
           <?php endforeach ?>
         </tbody>
       </table>
@@ -154,7 +154,7 @@
 
           <div class="form-outline mb-4">
             <label for="level_kupon_edit" class="form-label">Level Kupon</label>
-            <select name="level" id="level_kupon_edit" class="form-select" name="level_kupon" required>
+            <select id="level_kupon_edit" class="form-select" name="level_kupon" required>
               <option value="0">Level 0 (Untuk Customer Baru)</option>
               <option value="1">Level 1 (3x Transaksi)</option>
               <option value="2">Level 2 (5x Transaksi)</option>
@@ -183,21 +183,21 @@
 <?= $this->section('script'); ?>
 
 <script>
-const edit = (id, id_unique_produk, max, discount, level, deskripsi) => {
-  $('#id_kupon').val(id);
-  $('#id_unique_produk_edit').val(id_unique_produk);
-  $('#max_nominal_kupon_edit').val(max);
-  $('#discount_kupon_edit').val(discount);
-  $('#level_kupon_edit option').each(function() {
-    if ($(this).val() == level) {
-      $(this).attr('selected', 'selected');
-    }
-  });
-  $('#deskripsi_kupon_edit').val(deskripsi);
-  var modal = new mdb.Modal(document.getElementById('edit'));
+  const edit = (id, id_unique_produk, max, discount, level, deskripsi) => {
+    $('#id_kupon').val(id);
+    $('#id_unique_produk_edit').val(id_unique_produk);
+    $('#max_nominal_kupon_edit').val(max);
+    $('#discount_kupon_edit').val(discount);
+    $('#level_kupon_edit option').each(function() {
+      if ($(this).val() == level) {
+        $(this).attr('selected', 'selected');
+      }
+    });
+    $('#deskripsi_kupon_edit').val(deskripsi);
+    var modal = new mdb.Modal(document.getElementById('edit'));
 
-  modal.show();
-};
+    modal.show();
+  };
 </script>
 
 <?= $this->endSection(); ?>
